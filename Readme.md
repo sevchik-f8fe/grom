@@ -5,7 +5,7 @@
 ### GIT ПОШАГОВО:
 
     когда первый раз хочешь установить:
-    git clone ссылка_на_реп
+    git clone https://github.com/sevchik-f8fe/grom.git
     git checkout -b название_твой_НОВОЙ_ветки
     git branch //вывод локальных веток
     git pull master
