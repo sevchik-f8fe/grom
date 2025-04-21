@@ -6,15 +6,11 @@
 
 Когда первый раз хочешь установить:
 
-```bash
-git clone https://github.com/sevchik-f8fe/grom.git
-cd grom
-git branch ИМЯ_ВАШЕЙ_НОВОЙ_ВЕТКИ
-git branch //вывод локальных веток
-git pull main
-```
-
-Ты закончил свою работу и хочешь сохранить это:
+    когда первый раз хочешь установить:
+    git clone https://github.com/sevchik-f8fe/grom.git
+    git checkout -b название_твой_НОВОЙ_ветки или git branch ИМЯ_НОВОЙ_ВЕТКИ
+    git branch //вывод локальных веток
+    git pull main
 
 ```bash
 git add .
