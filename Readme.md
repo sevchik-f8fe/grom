@@ -9,7 +9,7 @@
 ```bash
 git clone https://github.com/sevchik-f8fe/grom.git
 cd grom
-git branch ИМЯ_НОВОЙ_ВЕТКИ
+git branch ИМЯ_ВАШЕЙ_НОВОЙ_ВЕТКИ
 git branch //вывод локальных веток
 git pull main
 ```
@@ -20,7 +20,7 @@ git pull main
 git add .
 git commit -m "описываешь вкратце че сделал"
 git remote add origin https://github.com/sevchik-f8fe/grom.git #(пишется один раз)
-git push -u origin main
+git push -u origin ИМЯ_ВАШЕЙ_НОВОЙ_ВЕТКИ
 ```
 
 Когда снова возвращаещься к работе:
@@ -39,8 +39,10 @@ git pull main
 ```bash
 git add .
 git remote add origin https://github.com/sevchik-f8fe/grom.git #(пишется один раз)
-git push -u origin main
+git push -u origin ИМЯ_ВАШЕЙ_НОВОЙ_ВЕТКИ
 ```
+
+Если вы неправильно написали команду, но не нажали Enter, то всю строку можно очистить при помощи комбинации Ctrl + U.
 
 ## ДАЛЕЕ ПО ПРОЕКТУ
 
