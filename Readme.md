@@ -13,7 +13,9 @@
         ты закончил свою работу и хочешь сохранить это:
         git add .
         git commit -m "описываешь вкратце че сделал"
-        git push --set-upstream "название_твой_НОВОЙ_ветки"
+        git remote add origin https://github.com/sevchik-f8fe/grom.git (пишется один раз)
+        git push -u origin main
+
 
     когда снова возвращаещься к работе:
     git checkout main
@@ -24,8 +26,8 @@
 
         ты закончил свою работу и хочешь сохранить это:
         git add .
-        git commit -m "описываешь вкратце че сделал"
-        git push --set-upstream "название_твой_НОВОЙ_ветки"
+        git remote add origin https://github.com/sevchik-f8fe/grom.git (пишется один раз)
+        git push -u origin main
 
 ### ДАЛЕЕ ПО ПРОЕКТУ:
 
