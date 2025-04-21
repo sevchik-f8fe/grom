@@ -6,9 +6,9 @@
 
     когда первый раз хочешь установить:
     git clone https://github.com/sevchik-f8fe/grom.git
-    git checkout -b название_твой_НОВОЙ_ветки
+    git checkout -b название_твой_НОВОЙ_ветки или git branch ИМЯ_НОВОЙ_ВЕТКИ
     git branch //вывод локальных веток
-    git pull master
+    git pull main
 
         ты закончил свою работу и хочешь сохранить это:
         git add .
@@ -16,11 +16,11 @@
         git push --set-upstream "название_твой_НОВОЙ_ветки"
 
     когда снова возвращаещься к работе:
-    git checkout master
+    git checkout main
     git pull
-    git checkout -b название_твой_НОВОЙ_ветки
+    git checkout -b название_твой_НОВОЙ_ветки или git branch ИМЯ_НОВОЙ_ВЕТКИ
     git branch //вывод локальных веток
-    git pull master
+    git pull main
 
         ты закончил свою работу и хочешь сохранить это:
         git add .
