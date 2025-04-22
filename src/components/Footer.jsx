@@ -1,3 +1,7 @@
+import i18 from "../assets/img/foot/18.svg";
+import ivk from "../assets/img/foot/vk.svg";
+import itg from "../assets/img/foot/tg.svg";
+
 const Footer = () => {
     return (
         <footer className="footer">
@@ -7,13 +11,13 @@ const Footer = () => {
             </div>
             <div className="footer-links">
                 <a href="" className="footer-link">
-                    <img src="/src/assets/img/foot/18.svg" alt="" className="footer-link-img" />
+                    <img src={i18} alt="" className="footer-link-img" />
                 </a>
                 <a href="" className="footer-link">
-                    <img src="/src/assets/img/foot/vk.svg" alt="" className="footer-link-img" />
+                    <img src={ivk} alt="" className="footer-link-img" />
                 </a>
                 <a href="" className="footer-link">
-                    <img src="/src/assets/img/foot/tg.svg" alt="" className="footer-link-img" />
+                    <img src={itg} alt="" className="footer-link-img" />
                 </a>
             </div>
         </footer>

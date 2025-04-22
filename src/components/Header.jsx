@@ -3,7 +3,7 @@ const Header = () => {
         //class auth
         <header className="header">
             <h1>ГРОМ КВЕСТ</h1>
-            <button className="btn login-btn">войти</button>
+            <button className="header-btn login-btn">войти</button>
         </header>
     );
 }

@@ -7,6 +7,7 @@ import Header from './components/Header'
 import HomePage from './pages/HomePage/HomePage'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import Footer from './components/Footer'
+import AuthPage from './pages/AuthPage/AuthPage'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
@@ -17,9 +18,7 @@ createRoot(document.getElementById('root')).render(
       <Routes>
         {/*здесь создаем маршруты вроде все ок */}
         <Route path='/' element={<HomePage />} />
-
-
-
+        <Route path='/auth' element={<AuthPage />} />
         {/*тут будет страница с неправельным маршрутом то есть когда 404 то будет выходить она */}
         <Route path='*' element={<></>} />
       </Routes>
