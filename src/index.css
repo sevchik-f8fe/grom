@@ -242,3 +242,52 @@ transition: all .1s ease;
 .auth-footer span {
   font-size: calc(var(--size)*1);
 }
+
+.stages-container {
+  padding: 2em;
+  /* gap: 1em; */
+  display: flex;
+  flex-direction: column;
+}
+
+.stage-elem {
+  display: flex;
+  justify-content: space-between;
+  /* gap: 1em; */
+}
+
+.stage-line {
+  z-index: 10;
+  position: relative;
+  transform: translateY(25%);
+  width: 90%;
+  margin-right: 1.5em;
+}
+
+.stage-line:nth-child(odd) {
+  transform: rotateY(180deg) translateY(25%);
+  margin-right: 0;
+  margin-left: 1.5em;
+}
+
+.stage-number-box {
+  z-index: 100;
+  font-family: 'bounded-black';
+  cursor: pointer;
+  font-size: calc(var(--size)*2.5);
+  min-width: 2em;
+  min-height: 2em;
+  max-width: 2em;
+  max-height: 2em;
+  border-radius: .5em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #665E5A;
+  background: linear-gradient(135deg,rgba(102, 94, 90, 1) 0%, rgba(173, 161, 155, 1) 50%, rgba(102, 94, 90, 1) 100%);
+}
+
+.active-box {
+  background: #E05100;
+  background: linear-gradient(135deg, rgba(224, 81, 0, 1) 0%, rgba(232, 135, 80, 1) 50%, rgba(224, 81, 0, 1) 100%);
+}

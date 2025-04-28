@@ -14,6 +14,7 @@ import Header from './components/Header'
 
 //импорт редусеров
 import { authReducer } from './pages/AuthPage/AuthSlice'
+import StagesPage from './pages/StagesPage/StagesPage'
 
 const rootReducer = combineReducers({
   auth: authReducer,
@@ -33,6 +34,7 @@ createRoot(document.getElementById('root')).render(
           {/*здесь создаем маршруты вроде все ок */}
           <Route path='/' element={<HomePage />} />
           <Route path='/auth' element={<AuthPage />} />
+          <Route path='/stages' element={<StagesPage />} />
 
 
 
