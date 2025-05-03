@@ -23,7 +23,7 @@
 }
 @font-face {
   font-family: 'bounded-light' ;
-  src: url(/src/assets/fonts/bounded-ExtraLight.ttf);
+  src: url(/src/assets/fonts/Bounded-ExtraLight.ttf);
 }
 
 :root {
@@ -64,7 +64,7 @@ a {
   height: 50px;
 }
 
-@media (min-height: 670px) {
+@media (min-height: 660px) {
   .footer {
     position: absolute;
     width: 100vw;
@@ -101,8 +101,6 @@ transition: all .1s ease;
   scale: 1.05;
 }
 
-
-
 .footer-text {
   font-family: 'moscow';
   font-size: .7em;
@@ -125,18 +123,13 @@ transition: all .1s ease;
   height: 100%;
 }
 
-.blur-container {
-  height: 100%;
-  /* min-height: 100vh; */
-  background-color: transparent;
-  backdrop-filter: blur(3px);
-  padding: 2em;
-}
 .auth-container {
+  backdrop-filter: blur(5px);
   background-color: #d9d9d930;
   /* background-color: #15151570; */
   border-radius: 1em;
   padding: 2em;
+  margin: 2em;
   display: flex;
   flex-direction: column;
   gap: 1.5em;

@@ -30,24 +30,24 @@ const AuthPage = () => {
     }
 
     return (
-        <div className="blur-container">
-            <div className="auth-container">
-                <h2 className="auth-title">АВТОРИЗАЦИЯ</h2>
-                <Input ref={inputRef} value={phone} onChange={setPhoneHandle} label="Номер телефона:" id="tel" placeholder="+7 (123) 456-78-90" />
-                <Input value={fullName} onChange={setFullNameHandle} label="ФИО:" id="fio" placeholder="Иванов Иван Иванович" />
-                <Checkbox value={confOk} onChange={setCheckConfHandle} href='#' label="Я СОГЛАСЕН С" link="ПОЛИТИКОЙ КОНФИДЕНЦИАЛЬНОСТИ" id="conf" />
-                <Checkbox value={persOk} onChange={setCheckPersHandle} href='#' label="Я СОГЛАСЕН НА" link="ОБРАБОТКУ ПЕРСОНАЛЬНЫХ ДАННЫХ" id="pers" />
+        // <div className="blur-container">
+        <div className="auth-container">
+            <h2 className="auth-title">АВТОРИЗАЦИЯ</h2>
+            <Input ref={inputRef} value={phone} onChange={setPhoneHandle} label="Номер телефона:" id="tel" placeholder="+7 (123) 456-78-90" />
+            <Input value={fullName} onChange={setFullNameHandle} label="ФИО:" id="fio" placeholder="Иванов Иван Иванович" />
+            <Checkbox value={confOk} onChange={setCheckConfHandle} href='#' label="Я СОГЛАСЕН С" link="ПОЛИТИКОЙ КОНФИДЕНЦИАЛЬНОСТИ" id="conf" />
+            <Checkbox value={persOk} onChange={setCheckPersHandle} href='#' label="Я СОГЛАСЕН НА" link="ОБРАБОТКУ ПЕРСОНАЛЬНЫХ ДАННЫХ" id="pers" />
 
-                {/*class disabled */}
-                <div className="auth-footer">
-                    <button disabled={phone.length < 11 || fullName.trim().split(' ').length < 2 || !confOk || !persOk} className="auth-btn" >ВОЙТИ</button>
+            {/*class disabled */}
+            <div className="auth-footer">
+                <button disabled={phone.length < 11 || fullName.trim().split(' ').length < 2 || !confOk || !persOk} className="auth-btn" >ВОЙТИ</button>
 
-                    <hr />
+                <hr />
 
-                    <span>ЕЩЁ НЕТ АККАУНТА?<br /><a href="">ЗАРЕГИСТРИРОВАТЬСЯ</a></span>
-                </div>
+                <span>ЕЩЁ НЕТ АККАУНТА?<br /><a href="">ЗАРЕГИСТРИРОВАТЬСЯ</a></span>
             </div>
         </div>
+        // </div>
     );
 }
 
