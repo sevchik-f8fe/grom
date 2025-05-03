@@ -11,6 +11,7 @@ import HomePage from './pages/HomePage/HomePage'
 import Footer from './components/Footer'
 import AuthPage from './pages/AuthPage/AuthPage'
 import Header from './components/Header'
+import FinishPage from './pages/FinishPage/FinishPage'
 
 //импорт редусеров
 import { authReducer } from './pages/AuthPage/AuthSlice'
@@ -42,7 +43,7 @@ createRoot(document.getElementById('root')).render(
           <Route path='/auth' element={<AuthPage />} />
           <Route path='/stages' element={<StagesPage />} />
           <Route path='/stages/:id' element={<StagePage />} />
-
+          <Route path='/finish' element={<FinishPage />} />
 
 
           {/*тут будет страница с неправельным маршрутом то есть когда 404 то будет выходить она */}

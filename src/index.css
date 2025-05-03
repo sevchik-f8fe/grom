@@ -21,6 +21,10 @@
   font-family: 'vivl' ;
   src: url(/src/assets/fonts/vivl-rail.otf);
 }
+@font-face {
+  font-family: 'bounded-light' ;
+  src: url(/src/assets/fonts/bounded-ExtraLight.ttf);
+}
 
 :root {
   font-family: 'bounded';
@@ -352,4 +356,53 @@ background-repeat: no-repeat;
 }
 .qr-btn:not(:disabled):active {
   scale: 1.05;
+}
+
+/* finishstage */
+.stage-block-container-finish {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2em;
+  gap: 2em;
+  min-height: 90vh;
+  background-image: var(--bg-url);
+background-repeat: no-repeat;
+  background-size: cover;
+}
+.stage-number-mesto {
+  display: block;
+  font-family: 'bounded-black';
+  font-size: 2.5em;
+  min-width: 2em;
+  min-height: 2em;
+  max-width: 2em;
+  max-height: 2em;
+  border-radius: .5em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #E05100;
+  background: linear-gradient(135deg, rgba(245, 166, 11, 1) 0%, rgba(246, 232, 124, 1) 50%, rgba(244, 164, 13, 1) 100%);
+}
+.stage-title {
+  font-family: 'bounded-black';
+  font-size: 3.2em;
+}
+.stage-header-finish {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1em;
+}
+.stage-subtitle-finish {
+  font-size: 1.7em;
+  padding-top: 0.8em;
+  margin:auto
+}
+.stage-subtitle-finish-light {
+  font-family: 'bounded-light';
+  font-size: 1em;
+  padding-top: 1.3em;
+  margin:auto
 }
