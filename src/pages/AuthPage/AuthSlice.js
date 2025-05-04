@@ -4,26 +4,18 @@ const authSlice = createSlice({
     name: 'auth',
     initialState: {
         phone: '+7',
-        fullName: '',
-        confOk: false,
-        persOk: false,
+        password: '',
     },
     reducers: {
         setPhone: (state, action) => {
             return { ...state, phone: action.payload };
         },
-        setFullName: (state, action) => {
-            return { ...state, fullName: action.payload };
-        },
-        setConf: (state, action) => {
-            return { ...state, confOk: action.payload };
-        },
-        setPers: (state, action) => {
-            return { ...state, persOk: action.payload };
+        setPassword: (state, action) => {
+            return { ...state, password: action.payload };
         },
     }
 });
 
-export const { setPhone, setFullName, setConf, setPers } = authSlice.actions;
+export const { setPhone, setPassword } = authSlice.actions;
 
 export const authReducer = authSlice.reducer;

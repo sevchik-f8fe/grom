@@ -1,9 +1,9 @@
-const Input = ({ ref, label, placeholder, id, value, onChange }) => {
+const Input = ({ error, ref, label, placeholder, id, value, onChange, type = 'text' }) => {
     return (
-        <div className="input-block">
+        <div className={error ? 'input-block error' : 'input-block'}>
             {/*class error */}
-            <label className="label" htmlFor={id}>{label}</label>
-            <input ref={ref} value={value} onChange={onChange} className="input" type="text" id={id} placeholder={placeholder} />
+            <label className={error ? 'label error' : 'label'} htmlFor={id}>{label}</label>
+            <input ref={ref} value={value} type={type} onChange={onChange} className={error ? 'input error' : 'input'} id={id} placeholder={placeholder} />
         </div>
     );
 }

@@ -51,6 +51,7 @@ h1 {
 }
 a {
   color: inherit;
+  text-decoration: underline;
 }
 
 .footer {
@@ -135,6 +136,12 @@ transition: all .1s ease;
   gap: 1.5em;
   text-align: center;
   user-select: none;
+  margin-bottom: calc(2em + 50px);
+}
+@media (max-height: 660px) {
+  .auth-container {
+  margin-bottom: 2em;
+  }
 }
 .auth-title {
   font-family: 'bounded-black' ;
@@ -146,9 +153,11 @@ transition: all .1s ease;
   display: flex;
   flex-direction: column;
   gap: .5em;
+  color:'#fff';
   text-align: left;
 }
 .label {
+  color:'#fff';
   font-size: .7em;
 }
 .input {
@@ -156,11 +165,12 @@ transition: all .1s ease;
   font-size: .9em;
   border-radius: 1em;
   border: 2px solid #fff;
+  color:'#fff';
   padding: .6em 1em;
 }
 .error {
-  color:#f44336;
-  border-color: #f44336;
+  color:#ef5350;
+  border-color: #ef5350;
 }
 .checkbox {
   cursor: pointer;
@@ -193,6 +203,48 @@ transition: all .1s ease;
   stroke-dasharray: 70.5096664428711 9999999;
   stroke-dashoffset: -262.2723388671875;
 }
+.auth-fields-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5em;
+}
+.member {
+  display: flex;
+  flex-direction: column;
+  gap: 2em;
+  font-size: .9em;
+  border-radius: 1em;
+  border: 2px solid #fff;
+  color: #fff;
+  padding: .6em 1em;
+  height: 40px;
+  transition: height .3s ease;
+  overflow: hidden;
+}
+.member-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1em;
+}
+.member-open {
+  transition: height .3s ease;
+  height: 310px;
+}
+.member-full {
+  border-color: #81c784;
+}
+.member-title-full {
+  color: #81c784;
+}
+.expand-icon {
+  width: 1.2em;
+  transform: rotate(-90deg);
+}
+.less {
+  transform: rotate(90deg);
+}
+
 .auth-footer {
   display: flex;
   flex-direction: column;
@@ -206,7 +258,7 @@ transition: all .1s ease;
   align-self: center;
   padding: .3em .8em;
   border-radius: 1em;
-  font-size: 1em;
+  font-size: .9em;
   cursor: pointer;
   transition: all .1s ease;
 }
@@ -221,7 +273,7 @@ transition: all .1s ease;
   color: #fff;
 }
 .auth-footer span {
-  font-size: .8em;
+  font-size: .7em;
 }
 
 .stages-container {
