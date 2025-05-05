@@ -27,15 +27,14 @@ git checkout main
 git pull
 git branch ИМЯ_НОВОЙ_ВЕТКИ
 git branch //вывод локальных веток
-git pull main
 ```
 
 Ты закончил свою работу и хочешь сохранить это:
 
 ```bash
 git add .
-git remote add origin https://github.com/sevchik-f8fe/grom.git #(пишется один раз)
-git push -u origin ИМЯ_ВАШЕЙ_НОВОЙ_ВЕТКИ
+git commit -m "описываешь вкратце че сделал"
+git push
 ```
 
 Если вы неправильно написали команду, но не нажали Enter, то всю строку можно очистить при помощи комбинации Ctrl + U.
