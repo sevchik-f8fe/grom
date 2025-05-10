@@ -52,7 +52,7 @@ const SignUpPage = () => {
         isCaptainVaild();
         isMembersVaild();
     }, [state])
-
+    // s
     const dispath = useDispatch();
     const navigate = useNavigate();
 
