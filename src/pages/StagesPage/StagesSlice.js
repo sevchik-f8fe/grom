@@ -19,18 +19,16 @@ const stagesSlice = createSlice({
     },
     reducers: {
         setActive: (state, action) => {
-            return { ...state, activeStageId: action.payload };
+            state.activeStageId = action.payload;
         },
         setStageCompleted: (state, action) => {
-            const arr = state.stages.map((elem) => {
+            state.stages = state.stages.map((elem) => {
                 if (elem.id === action.payload) {
                     return { id: elem.id, completed: true }
                 } else {
                     return elem
                 }
             });
-
-            return { ...state, stages: arr };
         },
     }
 });

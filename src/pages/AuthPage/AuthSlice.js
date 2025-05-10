@@ -8,10 +8,11 @@ const authSlice = createSlice({
     },
     reducers: {
         setPhone: (state, action) => {
-            return { ...state, phone: action.payload };
+            state.phone = action.payload;
+
         },
         setPassword: (state, action) => {
-            return { ...state, password: action.payload };
+            state.password = action.payload;
         },
     }
 });

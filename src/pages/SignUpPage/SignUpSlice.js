@@ -46,11 +46,9 @@ const signUpSlice = createSlice({
     reducers: {
         setCurrentStep: (state, action) => {
             state.currentStep = action.payload;
-            // return { ...state, currentStep: action.payload };
         },
         setCurrentMember: (state, action) => {
             state.currentMember = action.payload;
-            // return { ...state, currentMember: action.payload };
         },
         setCaptainField: (state, action) => {
             const { field, value } = action.payload;

@@ -85,7 +85,7 @@ const SignUpPage = () => {
 }
 
 const SignCap = () => {
-    const { captain, teamname } = useSelector((state) => state.signup)
+    const { captain } = useSelector((state) => state.signup)
 
     const dispath = useDispatch();
 
