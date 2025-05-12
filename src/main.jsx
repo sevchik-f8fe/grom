@@ -18,6 +18,7 @@ import StagePage from './pages/StagePage/StagePage'
 import { authReducer } from './pages/AuthPage/AuthSlice'
 import { stagesReducer } from './pages/StagesPage/StagesSlice'
 import { signUpReducer } from './pages/SignUpPage/SignUpSlice'
+import { globalReducer } from './globalSlice'
 
 //другое
 import Footer from './components/Footer'
@@ -29,6 +30,7 @@ const rootReducer = combineReducers({
   auth: authReducer,
   signup: signUpReducer,
   stages: stagesReducer,
+  global: globalReducer,
 })
 
 const store = configureStore({

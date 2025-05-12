@@ -7,12 +7,15 @@ import { useNavigate } from "react-router-dom";
 import Checkbox from "../../components/Checkbox";
 import expand from "../../assets/img/expand_icon.png"
 import { useEffect, useState } from "react";
+import axios from "axios";
+import { setError, setToken, setUser } from "../../globalSlice";
 
 const SignUpPage = () => {
     const { currentStep, confOk, persOk, captain, members } = useSelector((state) => state.signup)
+    const { error } = useSelector((state) => state.global)
     const state = useSelector(state => state.signup)
 
-    const [capOk, setCapOk] = useState(true);
+    const [capOk, setCapOk] = useState(false);
     const [memOk, setMemOk] = useState(false);
 
     useEffect(() => {
@@ -40,34 +43,102 @@ const SignUpPage = () => {
         const isCaptainVaild = () => {
             for (const key in captain) {
                 if (captain[key].value.length < 3 || captain[key].error === true) {
-                    setCapOk(true);
+                    setCapOk(false);
                     return;
                 }
             }
 
-            setCapOk(false);
+            setCapOk(true);
             return;
         }
 
         isCaptainVaild();
         isMembersVaild();
     }, [state])
-    // s
+
     const dispath = useDispatch();
     const navigate = useNavigate();
+
+    const fetchFormData = async () => {
+        await axios.post('http://127.0.0.1:3000/auth/signup',
+            {
+                captain: {
+                    teamname: captain.teamname.value,
+                    phone: captain.phone.value,
+                    email: captain.email.value,
+                    password: captain.password.value,
+                    username: captain.username.value,
+                    fullname: captain.fullname.value,
+                },
+                subordinates: [
+                    {
+                        id: members[0].id,
+                        phone: members[0].phone.value,
+                        email: members[0].email.value,
+                        username: members[0].username.value,
+                    },
+                    {
+                        id: members[1].id,
+                        phone: members[1].phone.value,
+                        email: members[1].email.value,
+                        username: members[1].username.value,
+                    },
+                    {
+                        id: members[2].id,
+                        phone: members[2].phone.value,
+                        email: members[2].email.value,
+                        username: members[2].username.value,
+                    },
+                    {
+                        id: members[3].id,
+                        phone: members[3].phone.value,
+                        email: members[3].email.value,
+                        username: members[3].username.value,
+                    },
+                ]
+            },
+            {
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            })
+            .then((res) => res.data)
+            .then((data) => {
+                dispath(setUser(data?.team || data?.admin));
+                dispath(setToken(data?.token));
+                dispath(setIsAdmin(data?.isAdmin));
+                dispath(setError(null))
+                navigate('/');
+            })
+            .catch((err) => {
+                dispath(setError(err.response.data.message))
+                console.log(err.response.data.message, err)
+            })
+
+    }
 
     const setStepHandle = () => {
         if (currentStep === 1) {
             dispath(setCurrentStep(2));
         } else {
+            fetchFormData();
             dispath(setCurrentStep(1));
-            navigate('/auth')
         }
+    }
+
+    const backHandle = () => {
+        dispath(setCurrentStep(1))
     }
 
     return (
         <div className="auth-container">
             <h2 className="auth-title">Регистрация</h2>
+
+            {error && (
+                <div className="error-container">
+                    <span>{error}</span>
+                </div>
+            )}
 
             {currentStep === 1 ? (
                 <SignCap />
@@ -76,7 +147,8 @@ const SignUpPage = () => {
             )}
 
             <div className="auth-footer">
-                <button disabled={currentStep === 1 ? (capOk) : (!memOk)} onClick={setStepHandle} className="auth-btn">{currentStep === 1 ? 'ДАЛЕЕ' : 'ЗАРЕГИСТРИРОВАТЬСЯ'}</button>
+                {currentStep === 2 && <button className="auth-btn back-btn" onClick={backHandle}>НАЗАД</button>}
+                <button disabled={currentStep === 1 ? (!capOk) : (!memOk)} onClick={setStepHandle} className="auth-btn">{currentStep === 1 ? 'ДАЛЕЕ' : 'ЗАРЕГИСТРИРОВАТЬСЯ'}</button>
                 <hr />
                 <span>УЖЕ ЕСТЬ АККАУНТ?<br /><a onClick={() => navigate('/auth')}>ВОЙТИ</a></span>
             </div>
@@ -104,7 +176,7 @@ const SignCap = () => {
     const teamnameHandle = (e) => {
         dispath(setCaptainField({ field: 'teamname', value: e.target.value.trimLeft() }))
 
-        if (e.target.value.trim().length < 1) {
+        if (e.target.value.trim().length < 3) {
             dispath(setCaptainError({ field: 'teamname', error: true }))
         } else {
             dispath(setCaptainError({ field: 'teamname', error: false }))
@@ -173,7 +245,7 @@ const SignCap = () => {
 
     return (
         <div className="auth-fields-container">
-            <Input error={captain.teamname.error} value={captain.teamname.value} onChange={teamnameHandle} label="Название команды" id="name" placeholder="Пидоры" />
+            <Input error={captain.teamname.error} value={captain.teamname.value} onChange={teamnameHandle} label="Название команды" id="name" placeholder="Гангстеры" />
             <Input error={captain.fullname.error} value={captain.fullname.value} onChange={fullnameHandle} label="ФИО капитана" id="fioCap" placeholder="Иванов Иван Иванович" />
             <Input error={captain.email.error} value={captain.email.value} onChange={emailHandle} type={'email'} label="Email капитана" id="mailCap" placeholder="mail@yandex.ru" />
             <Input error={captain.phone.error} value={captain.phone.value} onChange={phoneHandle} ref={inputRef} label="Телефон капитана" id="telCap" placeholder="+7 (123) 456-78-90" />
