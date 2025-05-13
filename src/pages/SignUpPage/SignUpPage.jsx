@@ -111,8 +111,8 @@ const SignUpPage = () => {
                 navigate('/');
             })
             .catch((err) => {
-                dispath(setError(err.response.data.message))
-                console.log(err.response.data.message, err)
+                // dispath(setError(err.response.data.message))
+                console.log( err)
             })
 
     }

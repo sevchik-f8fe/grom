@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import Input from "../../components/Input";
 import { setPassword, setPhone } from "./AuthSlice";
-import { setError, setToken, setUser } from "../../globalSlice";
+import { setError, setToken, setUser, setIsAdmin } from "../../globalSlice";
 import { useMask } from "@react-input/mask";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -42,8 +42,8 @@ const AuthPage = () => {
                 navigate('/')
             })
             .catch((err) => {
-                dispath(setError(err.response.data.message))
-                console.log(err.response.data.message, err)
+                // dispath(setError(err))
+                console.log(err)
             })
     }
 
