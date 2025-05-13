@@ -72,3 +72,5 @@ _Смотри че я сделал и как в HomePage.jsx и main.jsx и по
 [Документация по редуксу (тулкит)](https://redux-toolkit.js.org/introduction/getting-started)
 
 [Документация по редуксу (редукс)](https://redux.js.org/introduction/getting-started)
+
+**UPD:** необходимо разобраться с SQL-инъекциями
