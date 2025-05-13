@@ -8,7 +8,7 @@ import Checkbox from "../../components/Checkbox";
 import expand from "../../assets/img/expand_icon.png"
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { setError, setToken, setUser } from "../../globalSlice";
+import { setError, setToken, setUser, setIsAdmin } from "../../globalSlice";
 
 const SignUpPage = () => {
     const { currentStep, confOk, persOk, captain, members } = useSelector((state) => state.signup)
@@ -63,37 +63,37 @@ const SignUpPage = () => {
         await axios.post('http://127.0.0.1:3000/auth/signup',
             {
                 captain: {
-                    teamname: captain.teamname.value,
-                    phone: captain.phone.value,
-                    email: captain.email.value,
-                    password: captain.password.value,
-                    username: captain.username.value,
-                    fullname: captain.fullname.value,
+                    teamname: captain.teamname.value.trim(),
+                    phone: captain.phone.value.trim(),
+                    email: captain.email.value.trim(),
+                    password: captain.password.value.trim(),
+                    username: captain.username.value.trim(),
+                    fullname: captain.fullname.value.trim(),
                 },
                 subordinates: [
                     {
                         id: members[0].id,
-                        phone: members[0].phone.value,
-                        email: members[0].email.value,
-                        username: members[0].username.value,
+                        phone: members[0].phone.value.trim(),
+                        email: members[0].email.value.trim(),
+                        username: members[0].username.value.trim(),
                     },
                     {
                         id: members[1].id,
-                        phone: members[1].phone.value,
-                        email: members[1].email.value,
-                        username: members[1].username.value,
+                        phone: members[1].phone.value.trim(),
+                        email: members[1].email.value.trim(),
+                        username: members[1].username.value.trim(),
                     },
                     {
                         id: members[2].id,
-                        phone: members[2].phone.value,
-                        email: members[2].email.value,
-                        username: members[2].username.value,
+                        phone: members[2].phone.value.trim(),
+                        email: members[2].email.value.trim(),
+                        username: members[2].username.value.trim(),
                     },
                     {
                         id: members[3].id,
-                        phone: members[3].phone.value,
-                        email: members[3].email.value,
-                        username: members[3].username.value,
+                        phone: members[3].phone.value.trim(),
+                        email: members[3].email.value.trim(),
+                        username: members[3].username.value.trim(),
                     },
                 ]
             },
@@ -111,8 +111,8 @@ const SignUpPage = () => {
                 navigate('/');
             })
             .catch((err) => {
-                // dispath(setError(err.response.data.message))
-                console.log( err)
+                dispath(setError(err.response.data.message))
+                console.log(err)
             })
 
     }
@@ -147,8 +147,8 @@ const SignUpPage = () => {
             )}
 
             <div className="auth-footer">
-                {currentStep === 2 && <button className="auth-btn back-btn" onClick={backHandle}>НАЗАД</button>}
                 <button disabled={currentStep === 1 ? (!capOk) : (!memOk)} onClick={setStepHandle} className="auth-btn">{currentStep === 1 ? 'ДАЛЕЕ' : 'ЗАРЕГИСТРИРОВАТЬСЯ'}</button>
+                {currentStep === 2 && <button className="auth-btn back-btn" onClick={backHandle}>НАЗАД</button>}
                 <hr />
                 <span>УЖЕ ЕСТЬ АККАУНТ?<br /><a onClick={() => navigate('/auth')}>ВОЙТИ</a></span>
             </div>
@@ -175,6 +175,7 @@ const SignCap = () => {
 
     const teamnameHandle = (e) => {
         dispath(setCaptainField({ field: 'teamname', value: e.target.value.trimLeft() }))
+        // dispath(setCaptainField({ field: 'teamname', value: e.target.value.trimLeft().replace(/[^a-zA-Zа-яА-Я_ ]/g, "") }))
 
         if (e.target.value.trim().length < 3) {
             dispath(setCaptainError({ field: 'teamname', error: true }))
@@ -184,7 +185,7 @@ const SignCap = () => {
     }
 
     const fullnameHandle = (e) => {
-        dispath(setCaptainField({ field: 'fullname', value: e.target.value.trimLeft() }))
+        dispath(setCaptainField({ field: 'fullname', value: e.target.value.trimLeft().replace(/[^а-яА-Я ]/g, "") }))
 
         if (e.target.value.trim().split(' ').length < 2) {
             dispath(setCaptainError({ field: 'fullname', error: true }))
@@ -224,7 +225,7 @@ const SignCap = () => {
     }
 
     const passwordHandle = (e) => {
-        dispath(setCaptainField({ field: 'password', value: e.target.value.replace(/[а-яА-ЯёЁ]/g, "").trim() }))
+        dispath(setCaptainField({ field: 'password', value: e.target.value.replace(/[^a-zA-Z0-9_!?@#]/g, "").trim() }))
 
         if (e.target.value.length < 5) {
             dispath(setCaptainError({ field: 'password', error: true }))
@@ -234,7 +235,7 @@ const SignCap = () => {
     }
 
     const passwordRepHandle = (e) => {
-        dispath(setCaptainField({ field: 'passwordRep', value: e.target.value.replace(/[а-яА-ЯёЁ]/g, "").trim() }))
+        dispath(setCaptainField({ field: 'passwordRep', value: e.target.value.replace(/[^a-zA-Z0-9_!?@#]/g, "").trim() }))
 
         if (captain.password.value !== e.target.value) {
             dispath(setCaptainError({ field: 'passwordRep', error: true }))
@@ -325,7 +326,7 @@ const MemberFields = ({ member }) => {
     }
 
     const usernameHandle = (e) => {
-        dispath(setMemberField({ id: member.id, field: 'username', value: e.target.value.replace(/[^a-zA-Z0-9_@]/g, "") }))
+        dispath(setMemberField({ id: member.id, field: 'username', value: e.target.value }))
 
         if (e.target.value.length < 2) {
             dispath(setMemberError({ id: member.id, field: 'username', error: true }))

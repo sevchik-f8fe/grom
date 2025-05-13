@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import Input from "../../components/Input";
-import { setPassword, setPhone } from "./AuthSlice";
+import { setAuthField, setAuthError } from "./AuthSlice";
 import { setError, setToken, setUser, setIsAdmin } from "../../globalSlice";
 import { useMask } from "@react-input/mask";
 import { useNavigate } from "react-router-dom";
@@ -17,17 +17,9 @@ const AuthPage = () => {
         replacement: { _: /\d/ },
     });
 
-    const setPhoneHandle = (e) => {
-        dispath(setPhone(e.target.value))
-    }
-
-    const setPasswordHandle = (e) => {
-        dispath(setPassword(e.target.value.trim()))
-    }
-
     const fetchFormData = async () => {
         await axios.post('http://127.0.0.1:3000/auth/signin',
-            { phone, password },
+            { phone: phone.value.trim(), password: password.value.trim() },
             {
                 headers: {
                     'Content-Type': 'application/json',
@@ -42,13 +34,33 @@ const AuthPage = () => {
                 navigate('/')
             })
             .catch((err) => {
-                // dispath(setError(err))
+                dispath(setError(err.response.data.message))
                 console.log(err)
             })
     }
 
     const clickHandle = () => {
         fetchFormData();
+    }
+
+    const setPhoneHandle = (e) => {
+        dispath(setAuthField({ field: 'phone', value: e.target.value }))
+
+        if (e.target.value.length < 18) {
+            dispath(setAuthError({ field: 'phone', error: true }))
+        } else {
+            dispath(setAuthError({ field: 'phone', error: false }))
+        }
+    }
+
+    const setPasswordHandle = (e) => {
+        dispath(setAuthField({ field: 'password', value: e.target.value.replace(/[^a-zA-Z0-9_!?@#]/g, "").trim() }))
+
+        if (e.target.value.length < 5) {
+            dispath(setAuthError({ field: 'password', error: true }))
+        } else {
+            dispath(setAuthError({ field: 'password', error: false }))
+        }
     }
 
     return (
@@ -61,8 +73,8 @@ const AuthPage = () => {
                 </div>
             )}
 
-            <Input ref={inputRef} value={phone} onChange={setPhoneHandle} label="Номер телефона:" id="tel" placeholder="+7 (123) 456-78-90" />
-            <Input type="password" value={password} onChange={setPasswordHandle} label="Пароль" id="pass" />
+            <Input ref={inputRef} error={phone.error} value={phone.value} onChange={setPhoneHandle} label="Номер телефона:" id="tel" placeholder="+7 (123) 456-78-90" />
+            <Input type="password" error={password.error} value={password.value} onChange={setPasswordHandle} label="Пароль" id="pass" />
 
             <div className="auth-footer">
                 <button onClick={clickHandle} disabled={phone.length < 18 || password.length < 5} className="auth-btn" >ВОЙТИ</button>

@@ -263,14 +263,14 @@ transition: all .1s ease;
   transition: all .1s ease;
 }
 .auth-btn:disabled {
-  background-color: #b8b8b8;
+  background-color: #757575;
   color: #151515;
 }
 .auth-btn:active:not(:disabled) {
   scale: 1.05;
 }
 .back-btn {
-  background-color: #fff8;
+  background-color: #fff;
   color: #151515;
   font-size: .9em;
 }
@@ -462,7 +462,7 @@ background-repeat: no-repeat;
   border: 1px solid #ef5350;
   border-radius: 1em;
   color:#ef5350;
-  font-size: 1em;
+  font-size: .9em;
   text-align: center;
 }
 

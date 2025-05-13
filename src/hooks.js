@@ -4,11 +4,16 @@ import { useLocation } from "react-router-dom";
 import stage_bg from './assets/img/bg/stage_bg.png';
 import bg from './assets/img/bg/bg.png';
 import full_bg from './assets/img/bg/full_bg.png';
+import { useDispatch } from "react-redux";
+import { setError } from "./globalSlice";
 
 export default function ScrollToTop() {
     const { pathname } = useLocation();
 
+    const dispatch = useDispatch();
+
     useEffect(() => {
+        dispatch(setError(null))
         window.scrollTo(0, 0);
     }, [pathname]);
 

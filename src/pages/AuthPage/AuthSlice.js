@@ -3,20 +3,21 @@ import { createSlice } from "@reduxjs/toolkit";
 const authSlice = createSlice({
     name: 'auth',
     initialState: {
-        phone: '+7',
-        password: '',
+        phone: { value: '+7', error: false },
+        password: { value: '', error: false },
     },
     reducers: {
-        setPhone: (state, action) => {
-            state.phone = action.payload;
-
+        setAuthField: (state, action) => {
+            const { field, value } = action.payload;
+            state[field].value = value;
         },
-        setPassword: (state, action) => {
-            state.password = action.payload;
+        setAuthError: (state, action) => {
+            const { field, error } = action.payload;
+            state[field].error = error;
         },
     }
 });
 
-export const { setPhone, setPassword } = authSlice.actions;
+export const { setAuthField, setAuthError } = authSlice.actions;
 
 export const authReducer = authSlice.reducer;
