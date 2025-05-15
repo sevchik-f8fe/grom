@@ -474,61 +474,68 @@ background-repeat: no-repeat;
   text-align: center;
 }
 
-
-
-
-/*IGRORUA*/
-.main-content {
-  padding: 20px;
+.logodoctor{
+display: flex;
+flex-direction: column;
+align-items: center;
 }
 
-.logo-section {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 30px;
+.logo {
+  width: 90%;  
 }
 
-.logo-main {
-  font-size: 24px;
-  font-weight: bold;
-}
-
-.login-button {
-  font-size: 16px;
-  color: #555;
-}
-
-.character-name {
-  font-size: 32px;
-  font-weight: bold;
-  margin-bottom: 5px;
-}
-
-.quest-name {
-  font-size: 24px;
-  font-weight: bold;
-  margin-bottom: 30px;
-  color: #555;
-}
-
-.description-section {
-  margin-bottom: 30px;
-}
-
-.description-section p {
-  margin-bottom: 15px;
-  line-height: 1.4;
-}
-
-.action-button {
+.logo img {
   width: 100%;
-  padding: 15px;
-  background-color: #000;
-  color: #fff;
-  border: none;
-  font-size: 18px;
-  font-weight: bold;
-  border-radius: 5px;
+  margin-left: 5px;
+  margin-top: 20em;
+  margin-bottom: 10em;
+}
+
+
+
+.doctor {
+  position: relative;
+  width: 100%;
+  font-family: 'vivl';
+  text-align: center;
+}
+
+.doctor img {
+  position: absolute;
+  height: 90%;
+  height: 25em;
+  right: 0px;
+  bottom: 0px;
+  z-index: -1;
+}
+
+.abzaz p{
+  z-index: 100;
+  padding: 2em 6em 0em 1em;
+  text-align: left;
+}
+.abzaz span {
+color: #E05100;
+}
+.buttomtext{
+  font-family: 'vivl';
+  text-align: center;
+  max-width: 90%;
+  padding: 0;
+  padding-top: 7em;
+}
+
+.buttonuch{
+  all: unset;
+  font-family: 'moscow';
+  background-color: #E05100;
+  color: #ffffff;
+  align-self: center;
+  margin-top: 3em;
+  padding: .3em .8em;
+  border-radius: 1em;
+  font-size: .9em;
+  cursor: pointer;
+  transition: all .1s ease;
   cursor: pointer;
 }

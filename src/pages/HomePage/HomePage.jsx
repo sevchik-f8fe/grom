@@ -1,73 +1,43 @@
 // здесь пишешь импорты
 import { nanoid } from "nanoid";
+import l from "../../assets/img/doctor2.png"
+import a from "../../assets/img/full_logo.svg"
 //nanoid генерирует случайный ключ который нужен для реакта при рендере через перебор
 
 // обязательно называй компоненты с большой буквы
 const HomePage = () => {
-   return (
-    <div className="mobile-app">
-      {/* <header className="header">
-        <h1 className="header-title">ГЛАВНАЯ</h1>
-      </header> */}
 
-      <main className="main-content">
-        <div className="logo-section">
-          <div className="logo-main">ГРОМ-КВЕСТ</div>
-          <div className="login-button">(войти)</div>
-        </div>
-
-        <div className="character-name">МАЙОР ГРОМ</div>
-        <div className="quest-name">КВЕСТ</div>
-
-        <div className="description-section">
-          <p>
-            ГРОМ-КВЕСТ — ЭТО ОДИН КВЕСТ ПО ПЕТЕРБУРГУ В СТАНЕ «МАЙОРА ГРОМА». КОМАНДЫ СТУДЕНТОВ-ИНФОРЕЗИРОВ ИЩУТ МЕТКИ. 
-            РЕШАЮТ ЗАДАНИЯ И СОРЕВНИЧЕСТВ В АНАЛИЗЕ ОТКРЫТЫХ ДАННЫХ ПРЯМО НА ГОРОДСКИХ УЛИЦАХ.
-          </p>
-          
-          <p>
-            РЕАЛЬНЫЕ ЛОКАЦИИ ШИРPЫ И ΛΟΓΥΜΕΚΛΗΣ ЗАДАЧИ — ПРОВЕРЬТЕ НАВЫКИ РАССЛЕДОВАНИЯ И ФИНАМИЧНОМ ФОРМЕТЕ. 
-            ПОБЕЖДАЕТ КОМАНДА, КОТОРАЯ БЫСТРЕЕ ВСЕХ РАЗГАДАЕТ ФИНАЛЬНУЮ ЗАГАДКУ, ВКЛЮЧИТЕСЬ В ИГРУ!
-          </p>
-          
-          <p>
-            СТАНЬ ДЕТЕКТИВОМ НА УЛИЦАХ ПЕТЕРБУРГА И РАЗГАДАЙ ГЛАВНУЮ ТАЙНУ ВМЕСТЕ СО СВОЕЙ КОМАНДОЙ!
-          </p>
-        </div>
-
-        <button className="action-button">ПРИЯТЬ ЧУВСТВ</button>
-      </main>
-    </div>
-  );
-}
-
-// для удобства можно создать новый компонент который будет доступен только в этом файле
-
-// пропсы - то, что ты передаеш внутри круглых скобок
-
-/*
-можно писать так: 
-
-const YourChildElement = (props) => {
     return (
-        <p>{props.text}</p>
-    )
+<div className="logodoctor">
+
+<div className="logo">
+<img src={a}></img>
+</div>
+
+<div className="doctor">  
+<img src={l}></img>
+<h1>ГРОМ-КВЕСТ</h1>
+      <div className="abzaz">
+  <p>
+<span>Гром-Квест</span> – это OSINT-квест по Петербургу в стиле «Майора Грома». Команды студентов-инфобезников ищут метки, решают задания и соревнуются в анализе открытых данных прямо на городских улицах.
+  </p>
+
+  <p>
+Реальные локации, шифры и логические задачи – проверьте навыки расследования в динамичном формате. Побеждает команда, которая быстрее всех разгадает финальную загадку. <span>Включитесь в игру!</span>
+  </p>
+      </div>
+</div> 
+
+<p className="buttomtext">
+стань детективом на улицах Петербурга и разгадай главную тайну вместе со своей командой!
+</p>
+
+<button className="buttonuch">
+ПРИНЯТЬ УЧАСТИЕ
+</button>
+
+</div>
+    );
 }
 
-можно так:
-*/
-const YourChildElement = ({ text }) => {
-    return (
-        <p>{text}</p>
-    )
-}
-
-// для того чтобы сделать компонент с какимто содержимым, которое будет заполняться при его вызове, нужно передать пропс children
-const BlockComponent = ({ children }) => {
-    return (
-        <div>{children}</div>
-    )
-}
-
-//экспорт главного компонета чтобы потом получить его в main.jsx
 export default HomePage;
