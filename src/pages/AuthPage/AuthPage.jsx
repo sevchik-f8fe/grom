@@ -31,7 +31,7 @@ const AuthPage = () => {
                 dispath(setToken(data?.token));
                 dispath(setIsAdmin(data?.isAdmin));
                 dispath(setError(null))
-                navigate('/')
+                navigate('/stages')
             })
             .catch((err) => {
                 dispath(setError(err.response.data.message))
@@ -77,7 +77,7 @@ const AuthPage = () => {
             <Input type="password" error={password.error} value={password.value} onChange={setPasswordHandle} label="Пароль" id="pass" />
 
             <div className="auth-footer">
-                <button onClick={clickHandle} disabled={phone.length < 18 || password.length < 5} className="auth-btn" >ВОЙТИ</button>
+                <button onClick={clickHandle} disabled={phone.value.length < 18 || password.value.length < 5} className="auth-btn" >ВОЙТИ</button>
                 <hr />
                 <span>ЕЩЁ НЕТ АККАУНТА?<br /><a onClick={() => navigate('/signup')}>ЗАРЕГИСТРИРОВАТЬСЯ</a></span>
             </div>

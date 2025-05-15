@@ -112,6 +112,7 @@ transition: all .1s ease;
   font-size: 1.3em;
 }
 .footer-links {
+  cursor: pointer;
   display: flex;
   align-items: center;
   gap: .8em;
@@ -250,6 +251,9 @@ transition: all .1s ease;
   flex-direction: column;
   gap: .6em;
 }
+.auth-footer span a {
+  cursor: pointer;
+}
 .auth-btn {
   all: unset;
   font-family: 'bounded-black';
@@ -261,10 +265,12 @@ transition: all .1s ease;
   font-size: .9em;
   cursor: pointer;
   transition: all .1s ease;
+  cursor: pointer;
 }
 .auth-btn:disabled {
   background-color: #757575;
   color: #151515;
+  cursor:not-allowed;
 }
 .auth-btn:active:not(:disabled) {
   scale: 1.05;
@@ -272,6 +278,7 @@ transition: all .1s ease;
 .back-btn {
   background-color: #fff;
   color: #151515;
+  cursor: pointer;
   font-size: .9em;
 }
 .auth-footer hr {
@@ -402,6 +409,7 @@ background-repeat: no-repeat;
 }
 .qr-btn:disabled {
   background-color: #ADA19B;
+  cursor: not-allowed;
 
 }
 .qr-btn:not(:disabled):active {

@@ -108,7 +108,7 @@ const SignUpPage = () => {
                 dispath(setToken(data?.token));
                 dispath(setIsAdmin(data?.isAdmin));
                 dispath(setError(null))
-                navigate('/');
+                navigate('/stages');
             })
             .catch((err) => {
                 dispath(setError(err.response.data.message))
@@ -174,8 +174,7 @@ const SignCap = () => {
     });
 
     const teamnameHandle = (e) => {
-        dispath(setCaptainField({ field: 'teamname', value: e.target.value.trimLeft() }))
-        // dispath(setCaptainField({ field: 'teamname', value: e.target.value.trimLeft().replace(/[^a-zA-Zа-яА-Я_ ]/g, "") }))
+        dispath(setCaptainField({ field: 'teamname', value: e.target.value.trimLeft().replace(/[^a-zA-Zа-яА-Я_ ]/g, "") }))
 
         if (e.target.value.trim().length < 3) {
             dispath(setCaptainError({ field: 'teamname', error: true }))
@@ -185,7 +184,7 @@ const SignCap = () => {
     }
 
     const fullnameHandle = (e) => {
-        dispath(setCaptainField({ field: 'fullname', value: e.target.value.trimLeft().replace(/[^а-яА-Я ]/g, "") }))
+        dispath(setCaptainField({ field: 'fullname', value: e.target.value.trimLeft().replace(/[^a-zA-Zа-яА-Я ]/g, "") }))
 
         if (e.target.value.trim().split(' ').length < 2) {
             dispath(setCaptainError({ field: 'fullname', error: true }))
