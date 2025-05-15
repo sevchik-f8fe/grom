@@ -26,7 +26,7 @@ export const SetBG = () => {
     useEffect(() => {
         if (pathname === '/stages') {
             document.documentElement.style.setProperty('--bg-url', `url(${stage_bg})`);
-        } else if (/^\/stages\/([1-9]|10)$/.test(pathname) || ('finish')) {
+        } else if (/^\/stages\/([1-9]|10)$/.test(pathname) || pathname === '/finish') {
             document.documentElement.style.setProperty('--bg-url', `url(${bg})`);
         } else {
             document.documentElement.style.setProperty('--bg-url', `url(${full_bg})`);

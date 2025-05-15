@@ -31,10 +31,12 @@
   line-height: 1.5;
   font-weight: 400;
   color: #fff;
+  
   background-color: #151515;
-  /* background-image: url(/src/assets/img/bg/full_bg.png); */
   background-size: cover;
   background-repeat: no-repeat;
+  background-position: 50% top;
+
   position: relative;
   display: flex;
   flex-direction: column;
@@ -486,24 +488,23 @@ align-items: center;
 
 .logo img {
   width: 100%;
-  margin-left: 5px;
+  /* margin-left: 5px; */
   margin-top: 20em;
   margin-bottom: 10em;
 }
-
-
 
 .doctor {
   position: relative;
   width: 100%;
   font-family: 'vivl';
+  font-size: .75em;
   text-align: center;
 }
 
 .doctor img {
   position: absolute;
-  height: 90%;
-  height: 25em;
+  min-height: 80%;
+  max-height: 80%;
   right: 0px;
   bottom: 0px;
   z-index: -1;
@@ -522,7 +523,8 @@ color: #E05100;
   text-align: center;
   max-width: 90%;
   padding: 0;
-  padding-top: 7em;
+  margin-top: 5em;
+  font-size: .75em;
 }
 
 .buttonuch{
@@ -531,11 +533,15 @@ color: #E05100;
   background-color: #E05100;
   color: #ffffff;
   align-self: center;
-  margin-top: 3em;
+  margin: 3em 0 5em 0;
   padding: .3em .8em;
   border-radius: 1em;
-  font-size: .9em;
+  font-size: 1em;
   cursor: pointer;
   transition: all .1s ease;
   cursor: pointer;
+}
+
+.buttonuch:active:not(:disabled) {
+  scale: 1.05;
 }
