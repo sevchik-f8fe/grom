@@ -1,9 +1,17 @@
 import { useNavigate } from "react-router-dom";
 import l from "../../assets/img/doctor2.png"
 import a from "../../assets/img/full_logo.svg"
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
 const HomePage = () => {
-
+  const { token } = useSelector((state) => state.global)
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (token) {
+      navigate('/stages');
+    }
+  }, []);
 
   return (
     <div className="logodoctor">

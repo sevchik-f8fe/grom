@@ -2,9 +2,9 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { Provider } from 'react-redux'
-import { combineReducers } from 'redux'
+import sessionStorage from 'redux-persist/lib/storage/session'
+import { persistStore, persistReducer } from 'redux-persist'
 import { configureStore } from '@reduxjs/toolkit'
-import './index.css'
 
 //импорт страниц
 import HomePage from './pages/HomePage/HomePage'
@@ -24,41 +24,57 @@ import { globalReducer } from './globalSlice'
 import Footer from './components/Footer'
 import Header from './components/Header'
 import ScrollToTop, { SetBG } from './hooks'
+import './index.css'
+import { PersistGate } from 'redux-persist/integration/react'
+import Loading from './pages/LoadingPage'
 
+const persistConfig = {
+  key: 'team',
+  version: 1,
+  storage: sessionStorage,
+};
 
-const rootReducer = combineReducers({
-  auth: authReducer,
-  signup: signUpReducer,
-  stages: stagesReducer,
-  global: globalReducer,
-})
+const persistedReducer = persistReducer(persistConfig, globalReducer);
 
 const store = configureStore({
-  reducer: rootReducer,
-})
+  reducer: {
+    global: persistedReducer,
+    auth: authReducer,
+    signup: signUpReducer,
+    stages: stagesReducer,
+  },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: false,
+    }),
+});
+
+export const persistor = persistStore(store);
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <BrowserRouter>
       <Provider store={store}>
-        <ScrollToTop />
-        <SetBG />
-        <Header />
+        <PersistGate persistor={persistor} loading={null}>
+          <ScrollToTop />
+          <SetBG />
+          <Header />
 
-        <Routes>
-          {/*здесь создаем маршруты вроде все ок */}
-          <Route path='/' element={<HomePage />} />
-          <Route path='/auth' element={<AuthPage />} />
-          <Route path='/signup' element={<SignUpPage />} />
-          <Route path='/stages' element={<StagesPage />} />
-          <Route path='/stages/:id' element={<StagePage />} />
-          <Route path='/finish' element={<FinishPage />} />
+          <Routes>
+            {/*здесь создаем маршруты вроде все ок */}
+            <Route path='/' element={<HomePage />} />
+            <Route path='/auth' element={<AuthPage />} />
+            <Route path='/signup' element={<SignUpPage />} />
+            <Route path='/stages' element={<StagesPage />} />
+            <Route path='/stages/:id' element={<StagePage />} />
+            <Route path='/finish' element={<FinishPage />} />
 
-          {/*тут будет страница с неправельным маршрутом то есть когда 404 то будет выходить она */}
-          <Route path='*' element={<></>} />
-        </Routes>
+            {/*тут будет страница с неправельным маршрутом то есть когда 404 то будет выходить она */}
+            <Route path='*' element={<></>} />
+          </Routes>
 
-        <Footer />
+          <Footer />
+        </PersistGate>
       </Provider>
     </BrowserRouter>
   </StrictMode>,

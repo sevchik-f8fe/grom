@@ -12,11 +12,20 @@ import { setError, setToken, setUser, setIsAdmin } from "../../globalSlice";
 
 const SignUpPage = () => {
     const { currentStep, confOk, persOk, captain, members } = useSelector((state) => state.signup)
-    const { error } = useSelector((state) => state.global)
+    const { error, token } = useSelector((state) => state.global)
     const state = useSelector(state => state.signup)
+
+    const dispath = useDispatch();
+    const navigate = useNavigate();
 
     const [capOk, setCapOk] = useState(false);
     const [memOk, setMemOk] = useState(false);
+
+    useEffect(() => {
+        if (token) {
+            navigate('/stages')
+        }
+    }, [])
 
     useEffect(() => {
         const isMembersVaild = () => {
@@ -56,8 +65,6 @@ const SignUpPage = () => {
         isMembersVaild();
     }, [state])
 
-    const dispath = useDispatch();
-    const navigate = useNavigate();
 
     const fetchFormData = async () => {
         await axios.post('http://127.0.0.1:3000/auth/signup',
@@ -108,7 +115,7 @@ const SignUpPage = () => {
                 dispath(setToken(data?.token));
                 dispath(setIsAdmin(data?.isAdmin));
                 dispath(setError(null))
-                navigate('/stages');
+                navigate('/auth');
             })
             .catch((err) => {
                 dispath(setError(err.response.data.message))

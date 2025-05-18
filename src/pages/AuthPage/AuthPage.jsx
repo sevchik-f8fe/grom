@@ -5,12 +5,20 @@ import { setError, setToken, setUser, setIsAdmin } from "../../globalSlice";
 import { useMask } from "@react-input/mask";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { useEffect } from "react";
 
 const AuthPage = () => {
     const { password, phone } = useSelector((state) => state.auth);
-    const { error } = useSelector((state) => state.global);
+    const { error, token } = useSelector((state) => state.global);
+    const state = useSelector(state => state.global)
     const dispath = useDispatch();
     const navigate = useNavigate();
+
+    useEffect(() => {
+        if (token) {
+            navigate('/stages');
+        }
+    }, [state])
 
     const inputRef = useMask({
         mask: '+7 (___) ___-__-__',
@@ -31,7 +39,7 @@ const AuthPage = () => {
                 dispath(setToken(data?.token));
                 dispath(setIsAdmin(data?.isAdmin));
                 dispath(setError(null))
-                navigate('/stages')
+                // navigate('/stages')
             })
             .catch((err) => {
                 dispath(setError(err.response.data.message))

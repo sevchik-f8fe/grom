@@ -2,10 +2,19 @@ import grayLine from "../../assets/img/lines/gray_line.svg"
 import colorLine from "../../assets/img/lines/color_line.svg"
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 const StagesPage = () => {
     const { stages, activeStageId } = useSelector((state) => state.stages)
+    const { token } = useSelector(state => state.global)
     const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+    // useEffect(() => {
+    //     if (!token || token.length < 5) {
+    //         navigate('/auth')
+    //     }
+    // }, [])
 
     return (
         <div className="stages-container">
