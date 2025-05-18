@@ -26,7 +26,6 @@ import Header from './components/Header'
 import ScrollToTop, { SetBG } from './hooks'
 import './index.css'
 import { PersistGate } from 'redux-persist/integration/react'
-import Loading from './pages/LoadingPage'
 
 const persistConfig = {
   key: 'team',

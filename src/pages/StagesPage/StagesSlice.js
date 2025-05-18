@@ -4,35 +4,27 @@ const stagesSlice = createSlice({
     name: 'stages',
     initialState: {
         stages: [
-            { id: 1, completed: false },
-            { id: 2, completed: false },
-            { id: 3, completed: false },
-            { id: 4, completed: false },
-            { id: 5, completed: false },
-            { id: 6, completed: false },
-            { id: 7, completed: false },
-            { id: 8, completed: false },
-            { id: 9, completed: false },
-            { id: 10, completed: false },
+            '681f7b184842dc852e405f6b',
+            '681f7ba54842dc852e405f6f',
+            '681f7c014842dc852e405f71',
+            '681f7c444842dc852e405f77',
+            '681f7c9a4842dc852e405f83',
+            '681f7cd54842dc852e405f85',
+            '681f7cfe4842dc852e405f89',
+            '681f7d1b4842dc852e405f8f',
+            '681f7d534842dc852e405f93',
+            '681f7d7c4842dc852e405f97'
         ],
-        activeStageId: 1,
+        activeStageId: '681f7b184842dc852e405f6b',
     },
     reducers: {
-        setActive: (state, action) => {
+        setActiveStage: (state, action) => {
+            console.log(action.payload)
             state.activeStageId = action.payload;
-        },
-        setStageCompleted: (state, action) => {
-            state.stages = state.stages.map((elem) => {
-                if (elem.id === action.payload) {
-                    return { id: elem.id, completed: true }
-                } else {
-                    return elem
-                }
-            });
         },
     }
 });
 
-export const { setActive, setStageCompleted } = stagesSlice.actions;
+export const { setActiveStage } = stagesSlice.actions;
 
 export const stagesReducer = stagesSlice.reducer;

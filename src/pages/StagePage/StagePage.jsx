@@ -1,19 +1,22 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { setActive, setStageCompleted } from "../StagesPage/StagesSlice";
+import { setActiveStage } from "../StagesPage/StagesSlice";
 
 const StagePage = () => {
-    const { activeStageId } = useSelector((state) => state.stages)
+    const { stages, activeStageId } = useSelector((state) => state.stages)
     const dispatch = useDispatch();
 
     const params = useParams();
     const navigate = useNavigate();
 
     const clickHandle = () => {
-        dispatch(setActive(activeStageId + 1));
-        dispatch(setStageCompleted(activeStageId));
+        if (params.id != 10) {
+            const currentId = stages.findIndex(stage => stage == activeStageId);
+            console.log('need:', stages[currentId + 1])
+            dispatch(setActiveStage(stages[currentId + 1]));
 
-        navigate('/stages')
+            navigate('/stages')
+        }
     }
 
     return (
