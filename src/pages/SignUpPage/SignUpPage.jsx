@@ -280,8 +280,8 @@ const SignMembers = () => {
     return (
         <div className="auth-fields-container">
             {members.map((member) => (
-                <div key={member.id} className={`${currentMember === member.id ? 'member-open' : ''} ${!member.email.error && !member.phone.error && !member.username.error && member.phone.value.length == 18 && member.username.value.length > 1 && member.email.value.length > 3 ? 'member-full' : ''} member`}>
-                    <div onClick={() => clickHandle(member.id)} className={`${!member.email.error && !member.phone.error && !member.username.error && member.phone.value.length == 18 && member.username.value.length > 2 && member.email.value.length > 3 ? 'member-title-full' : ''} member-title`}>
+                <div onClick={() => clickHandle(member.id)} key={member.id} className={`${currentMember === member.id ? 'member-open' : ''} ${!member.email.error && !member.phone.error && !member.username.error && member.phone.value.length == 18 && member.username.value.length > 1 && member.email.value.length > 3 ? 'member-full' : ''} member`}>
+                    <div className={`${!member.email.error && !member.phone.error && !member.username.error && member.phone.value.length == 18 && member.username.value.length > 2 && member.email.value.length > 3 ? 'member-title-full' : ''} member-title`}>
                         Член команды №{member.id}
                         <img className={currentMember === member.id ? 'expand-icon less' : 'expand-icon'} src={expand} alt="" />
                     </div>

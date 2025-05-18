@@ -13,6 +13,7 @@ import FinishPage from './pages/FinishPage/FinishPage'
 import SignUpPage from './pages/SignUpPage/SignUpPage'
 import StagesPage from './pages/StagesPage/StagesPage'
 import StagePage from './pages/StagePage/StagePage'
+import AdminPage from './pages/AdminPage/AdminPage'
 
 //импорт редусеров
 import { authReducer } from './pages/AuthPage/AuthSlice'
@@ -26,6 +27,7 @@ import Header from './components/Header'
 import ScrollToTop, { SetBG } from './hooks'
 import './index.css'
 import { PersistGate } from 'redux-persist/integration/react'
+import { adminReducer } from './pages/AdminPage/AdminSlice'
 
 const persistConfig = {
   key: 'team',
@@ -41,6 +43,7 @@ const store = configureStore({
     auth: authReducer,
     signup: signUpReducer,
     stages: stagesReducer,
+    admin: adminReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
@@ -67,6 +70,7 @@ createRoot(document.getElementById('root')).render(
             <Route path='/stages' element={<StagesPage />} />
             <Route path='/stages/:id' element={<StagePage />} />
             <Route path='/finish' element={<FinishPage />} />
+            <Route path='/admin' element={<AdminPage />} />
 
             {/*тут будет страница с неправельным маршрутом то есть когда 404 то будет выходить она */}
             <Route path='*' element={<></>} />

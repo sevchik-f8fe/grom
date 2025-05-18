@@ -13,57 +13,46 @@ const StagesPage = () => {
 
     useEffect(() => {
         if (!token || token.length < 5) {
-            navigate('/auth');
+            // navigate('/auth');
             return;
         }
 
         // dispatch(setActiveStage(user.currentPoint))
     }, [])
 
-    const isStageCompleted = (stageId, activeStageId, stages) => {
-        const activeIndex = stages.indexOf(activeStageId);
-        const stageIndex = stages.indexOf(stageId);
-
-        if (activeIndex === -1 || stageIndex === -1) {
-            return false;
-        }
-
-        return stageIndex < activeIndex;
-    };
-
     return (
         <div className="stages-container">
-            {stages.map((stage, id, stages) => <StageElement number={id + 1} stages={stages} stage={stage} key={stage} active={activeStageId} completed={isStageCompleted(stage, activeStageId, stages)} />)}
+            {stages.map((stage) => <StageElement stage={stage} key={stage.point} active={activeStageId} completed={activeStageId > stage.id} />)}
         </div>
     );
 }
 
-const StageElement = ({ number, active, stage, stages, completed }) => {
+const StageElement = ({ active, stage, completed }) => {
     const navigate = useNavigate();
 
     const clickHandle = () => {
-        if (stage === active) {
-            navigate(`/stages/${number}`)
+        if (stage.id === active) {
+            navigate(`/stages/${stage.id}`)
         }
         return;
     }
 
     return (
         <>
-            {number % 2 !== 0 ? (
+            {stage.id % 2 !== 0 ? (
                 // нечет
                 <div className="stage-elem">
-                    <div onClick={clickHandle} className={`stage-number-box ${(active === stages[number + 1]) || completed ? 'active-box' : ''}`}>
-                        {number}
+                    <div onClick={clickHandle} className={`stage-number-box ${(active === stage.id + 1) || completed ? 'active-box' : ''}`}>
+                        {stage.id}
                     </div>
-                    <img className="stage-line" src={(active === stages[number + 1]) || completed ? (colorLine) : (grayLine)} alt="" />
+                    <img className="stage-line" src={(active === stage.id + 1) || completed ? (colorLine) : (grayLine)} alt="" />
                 </div>
             ) : (
                 // чет
                 <div className="stage-elem">
-                    {number !== 10 ? <img className="stage-line" src={(active === stages[number + 1]) || completed ? (colorLine) : (grayLine)} alt="" /> : <div style={{ opacity: 0 }}>.</div>}
-                    <div onClick={clickHandle} className={`stage-number-box ${(active === stages[number]) || completed ? 'active-box' : ''}`}>
-                        {number}
+                    {stage.id !== 10 ? <img className="stage-line" src={(active === stage.id + 1) || completed ? (colorLine) : (grayLine)} alt="" /> : <div style={{ opacity: 0 }}>.</div>}
+                    <div onClick={clickHandle} className={`stage-number-box ${(active === stage.id + 1) || completed ? 'active-box' : ''}`}>
+                        {stage.id}
                     </div>
                 </div>
             )}

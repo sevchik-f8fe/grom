@@ -545,3 +545,79 @@ color: #E05100;
 .buttonuch:active:not(:disabled) {
   scale: 1.05;
 }
+
+.map-container {
+  background-color: #fff;
+  width: 100%;
+  height: 60vh;
+  border-radius: 0 0 1em 1em;
+}
+
+.admin-text-container {
+  padding: 2em;
+  font-size: .9em;
+  text-decoration: underline;
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+
+.admin-text-block {
+  display:flex;
+  justify-content: space-between;
+}
+
+.admin-text {
+  max-width: fit-content;
+}
+
+.admin-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  font-size: .9em;
+  border-radius: 1em;
+  border: 2px solid #fff;
+  color: #fff;
+  padding: .6em 1em;
+  height: 40px;
+  margin: 0 2em;
+  transition: height .3s ease;
+  overflow: hidden;
+  scrollbar-width: 0;
+  margin-bottom: 5em;
+} 
+
+.admin-list::-webkit-scrollbar {
+  width: 10px;
+}
+
+.admin-list-open {
+  height: 500px;
+  overflow: auto;
+}
+
+.team-list-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 1em;
+  align-items: center;
+  line-height: 1;
+  cursor: pointer;
+  border-bottom: 1px solid #fff6;
+  padding-bottom: 1em;
+}
+
+.list-team-element {
+  border-bottom: 1px solid #fff6;
+  padding-bottom: 1em;
+  display: flex;
+  flex-direction: column;
+  font-size: 1em;
+}
+
+.list-team-title {
+  font-family: 'bounded-black';
+  font-size: 1.2em;
+  padding-bottom: .5em;
+}
