@@ -1,14 +1,68 @@
 import { useDispatch, useSelector } from "react-redux";
 import { setCloseTeam, setListIsOpen, setOpenTeamId } from "./AdminSlice";
 import { nanoid } from "nanoid";
+import { useEffect, useRef } from "react";
 
 import expand from "../../assets/img/expand_icon.png"
+import { Map, YMaps } from "@pbe/react-yandex-maps";
 
 const AdminPage = () => {
+    const mapContainerRef = useRef(null);
+
+    const dataList = [
+        {
+            coords: [51.0000, 51.0000],
+            onClickEvent: () => alert('a'),
+        },
+        {
+            coords: [51.0001, 51.0001],
+            onClickEvent: () => alert('a'),
+        },
+        {
+            coords: [51.0003, 51.0003],
+            onClickEvent: () => alert('a'),
+        },
+    ];
+
+    useEffect(() => {
+        const uploadMap = async () => {
+            initMap();
+
+            async function initMap() {
+
+            }
+        }
+
+        uploadMap();
+    }, []);
+
+
+    const mapState = {
+        center: [59.938886, 30.313838],
+        zoom: 10,
+        bounds: [[59.809178, 30.077169], [60.062201, 30.491047]], // Границы карты
+    }
+
+    const mapOptions = {
+        controls: [],
+        suppressMapOpenBlock: true,
+        restrictMapArea: true,
+        maxZoom: 15,
+        minZoom: 3
+    };
+
     return (
         <div className="admin-container">
-            <div className="map-container">
-
+            <div className="map-container" ref={mapContainerRef}>
+                <YMaps>
+                    <Map
+                        width={'100%'}
+                        height={'60vh'}
+                        defaultState={mapState}
+                        options={mapOptions}
+                    // defaultOptions={{ maxZoom: 12, minZoom: 12 }}
+                    />
+                </YMaps>
             </div>
 
             <div className="admin-text-container">
