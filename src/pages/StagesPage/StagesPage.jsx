@@ -7,7 +7,7 @@ import { setActiveStage } from "./StagesSlice";
 
 const StagesPage = () => {
     const { stages, activeStageId } = useSelector((state) => state.stages)
-    const { user, token } = useSelector(state => state.global)
+    const { user, token, startAt } = useSelector(state => state.global)
     const dispatch = useDispatch();
     const navigate = useNavigate();
 

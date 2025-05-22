@@ -14,15 +14,15 @@ const AuthPage = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    // useEffect(() => {
-    //     if (token) {
-    //         if (isAdmin) {
-    //             navigate('/admin')
-    //         } else {
-    //             navigate('/stages');
-    //         }
-    //     }
-    // }, [token, user])
+    useEffect(() => {
+        if (token) {
+            if (isAdmin) {
+                navigate('/admin')
+            } else {
+                navigate('/');
+            }
+        }
+    }, [token, user])
 
     const inputRef = useMask({
         mask: '+7 (___) ___-__-__',
@@ -39,7 +39,7 @@ const AuthPage = () => {
             })
             .then((res) => res.data)
             .then((data) => {
-                dispatch(setUser(data?.team || data?.admin));
+                dispatch(setUser(data?.user));
                 dispatch(setToken(data?.token));
                 dispatch(setIsAdmin(data?.isAdmin));
                 dispatch(setError(null))

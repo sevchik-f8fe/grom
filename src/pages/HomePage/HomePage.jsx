@@ -2,13 +2,35 @@ import { useNavigate } from "react-router-dom";
 import l from "../../assets/img/doctor2.png"
 import a from "../../assets/img/full_logo.svg"
 import { useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
+import { setError, setStartAt } from "../../globalSlice";
 const HomePage = () => {
-  const { token } = useSelector((state) => state.global)
+  const { token } = useSelector((state) => state.global);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   useEffect(() => {
+    const fetchTime = async () => {
+      await axios.get('http://127.0.0.1:3000/getTime',
+        {
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json',
+          }
+        })
+        .then((res) => res.data)
+        .then((data) => {
+          dispatch(setStartAt(data.startAt));
+          dispatch(setError(null))
+        })
+        .catch((err) => {
+          dispatch(setError(err.response.data.message))
+        })
+    }
+
     if (token) {
+      fetchTime();
       navigate('/stages');
     }
   }, []);

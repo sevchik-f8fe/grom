@@ -51,10 +51,6 @@ export const UseWebSocket = () => {
         newSocket.onclose = () => {
             console.log('Disconnected from WebSocket server');
         };
-
-        // return () => {
-        //     newSocket.close();
-        // };
     }, [error, user, token, socketState]);
 
     return null;

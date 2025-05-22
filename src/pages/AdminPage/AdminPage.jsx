@@ -3,14 +3,16 @@ import { Map, Placemark, YMaps } from "@pbe/react-yandex-maps";
 
 import mark from "../../assets/img/geoMark.png"
 import markInactive from "../../assets/img/geoMarkInactive.png"
+import markPoint from "../../assets/img/dot.png"
 import { useEffect } from "react";
-import { setCurrentTeam, setTeams, updateTeam } from "./AdminSlice";
+import { setCurrentTeam, setPoints, setTeams, updateTeam } from "./AdminSlice";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { setError } from "../../globalSlice";
 
 const AdminPage = () => {
-    const { teams, currentTeam } = useSelector(state => state.admin)
+    const { teams, currentTeam, points } = useSelector(state => state.admin)
+    const { token, user, error } = useSelector((state) => state.global)
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -32,7 +34,11 @@ const AdminPage = () => {
         const fetchTeams = async () => {
             await axios.post('http://127.0.0.1:3000/admin/getTeams',
                 {
+                    phone: user.phone
+                },
+                {
                     headers: {
+                        'Authorization': `Bearer ${token}`,
                         'Content-Type': 'application/json',
                     }
                 })
@@ -43,14 +49,40 @@ const AdminPage = () => {
                 })
                 .catch((err) => {
                     dispatch(setError(err.response.data.message))
-                    console.log(err)
+                })
+        }
+
+        const fetchPoints = async () => {
+            await axios.post('http://127.0.0.1:3000/admin/getPoints',
+                {
+                    phone: user.phone
+                },
+                {
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json',
+                    }
+                })
+                .then((res) => res.data)
+                .then((data) => {
+                    dispatch(setPoints(data.points));
+                    dispatch(setError(null))
+                })
+                .catch((err) => {
+                    dispatch(setError(err.response.data.message))
                 })
         }
         //     if (!token || !isAdmin) {
         //         navigate('/auth');
         //         return;
         //     } else {
-        fetchTeams();
+        if (!error) {
+            fetchTeams();
+        }
+
+        if (!error) {
+            fetchPoints();
+        }
         //}
     }, [])
 
@@ -80,6 +112,22 @@ const AdminPage = () => {
         iconImageSize: [40, 40],
     };
 
+    const pointPlacemarkOptions = {
+        iconLayout: 'default#image',
+        iconImageHref: markPoint,
+        iconImageSize: [10, 10],
+        iconOffset: [5, 5]
+    };
+
+    const copyHandle = async (text) => {
+        await navigator.clipboard.writeText(text)
+    }
+
+    const idToNumber = (id) => {
+        console.log(id);
+        return points.findIndex((elem) => elem._id == id) + 1 || "ой";
+    }
+
     return (
         <div className="admin-container">
             <div className="map-container">
@@ -90,6 +138,14 @@ const AdminPage = () => {
                         defaultState={mapState}
                         options={mapOptions}
                     >
+                        {points?.map((elem) => <Placemark
+                            key={nanoid()}
+                            options={pointPlacemarkOptions}
+                            onClick={() => {
+                                dispatch(setCurrentTeam(elem?.onClickHandle()))
+                            }}
+                            geometry={[elem?.lat, elem?.lon]}
+                        />)}
                         {teams?.map((elem) => <Placemark
                             key={nanoid()}
                             options={elem.teamName == currentTeam?.teamname ? curretnPlacemarkOptions : placemarkOptions}
@@ -98,6 +154,7 @@ const AdminPage = () => {
                             }}
                             geometry={elem?.currentCoords}
                         />)}
+
                     </Map>
                 </YMaps>
             </div>
@@ -115,25 +172,48 @@ const AdminPage = () => {
                 <div className="admin-team-container">
                     {currentTeam ? (
                         <div className="admin-team">
-                            <div className="admin-team-element">
-                                <span className="admin-team-text">Команда:</span>
-                                <span className="admin-team-text">{currentTeam.teamname}</span>
-                            </div>
-                            <div className="admin-team-element">
-                                <span className="admin-team-text">Капитан:</span>
-                                <span className="admin-team-text">{currentTeam.fullname}</span>
-                            </div>
-                            <div className="admin-team-element">
-                                <span className="admin-team-text">Телеграмм:</span>
-                                <span className="admin-team-text tg">{currentTeam.username}</span>
-                            </div>
-                            <div className="admin-team-element">
-                                <span className="admin-team-text">Текущая точка:</span>
-                                <span className="admin-team-text">№ {currentTeam.currentPoint}</span>
-                            </div>
+                            {currentTeam?.teamname && (
+                                <div className="admin-team-element">
+                                    <span className="admin-team-text">Команда:</span>
+                                    <span className="admin-team-text">{currentTeam?.teamname}</span>
+                                </div>
+                            )}
+                            {currentTeam?.fullname && (
+                                <div className="admin-team-element">
+                                    <span className="admin-team-text">Капитан:</span>
+                                    <span className="admin-team-text">{currentTeam?.fullname}</span>
+                                </div>
+                            )}
+                            {currentTeam?.username && (
+                                <div className="admin-team-element">
+                                    <span className="admin-team-text">Телеграмм:</span>
+                                    <span className="admin-team-text tg" onClick={() => copyHandle(currentTeam?.username)}>{currentTeam?.username}</span>
+                                </div>
+                            )}
+                            {currentTeam?.currentPoint && (
+                                <div className="admin-team-element">
+                                    <span className="admin-team-text">Текущая точка:</span>
+                                    <span className="admin-team-text">№ {idToNumber(currentTeam?.currentPoint)}</span>
+                                </div>
+                            )}
+                            {currentTeam?.coords && (
+                                <>
+                                    <div className="admin-team-element">
+                                        <span className="admin-team-text">Точка № </span>
+                                        <span className="admin-team-text">{idToNumber(currentTeam?.id)}</span>
+                                    </div>
+                                    <div className="admin-team-element">
+                                        <span className="admin-team-text">Координаты: </span>
+                                        <span className="admin-team-text coords" onClick={() => copyHandle(currentTeam?.id)}>{currentTeam?.coords}</span>
+                                    </div>
+                                </>
+                            )}
                         </div>
+                    ) : ((error ? (
+                        <span className="admin-team-err error">{error}</span>
                     ) : (
-                        <span className="admin-team-err">вы можете выбрать одну из команд на карте, чтобы узнать подробную информацию о ней</span>
+                        <span className="admin-team-err">вы можете выбрать одну из команд или точек на карте, чтобы узнать подробную информацию о ней</span>
+                    ))
                     )}
                 </div>
             </div>

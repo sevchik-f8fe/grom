@@ -598,8 +598,7 @@ color: #E05100;
 
 .admin-team-text {
   display: block;
-  font-size: 1.5em;
-  overflow-x: auto;
+  font-size: 1.2em;
 }
 
 .admin-team-text:nth-child(odd) {
@@ -609,4 +608,27 @@ color: #E05100;
 
 .admin-team-err {
   text-decoration: none;
+}
+
+.coords{
+  cursor: pointer;
+  background-color: #ffffff20;
+  padding: .5em .5em .3em .5em;
+  border-radius: 5px;
+  line-height: 1;
+  font-size: 1em;
+  transition: transform .1s ease;
+}
+
+.tg {
+    cursor: pointer;
+  background-color: #ffffff20;
+  padding: .5em .5em .3em .5em;
+  border-radius: 5px;
+  line-height: 1;
+  transition: transform .1s ease;
+}
+
+.coords:active, .tg:active {
+  transform: scale(1.05);
 }

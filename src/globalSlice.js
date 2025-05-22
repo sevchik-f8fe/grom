@@ -9,14 +9,13 @@ const globalSlice = createSlice({
         isAdmin: false,
         token: null,
         error: null,
-        currentCoords: null,
+        startAt: null,
     },
     reducers: {
         setUser: (state, action) => {
             state.user = action.payload;
         },
         setSocket: (state, action) => {
-            console.log(action.payload)
             state.socketSendHandle = action.payload.send;
             state.socketState = action.payload.readyState;
         },
@@ -29,12 +28,13 @@ const globalSlice = createSlice({
         setError: (state, action) => {
             state.error = action.payload;
         },
-        setCoords: (state, action) => {
-            state.currentCoords = action.payload;
+        setStartAt: (state, action) => {
+            console.log(action.payload)
+            state.startAt = action.payload;
         },
     }
 });
 
-export const { setUser, setIsAdmin, setToken, setError, setSocket, setCoords } = globalSlice.actions;
+export const { setUser, setIsAdmin, setToken, setError, setSocket, setStartAt } = globalSlice.actions;
 
 export const globalReducer = globalSlice.reducer;
