@@ -15,7 +15,7 @@ const SignUpPage = () => {
     const { error, token } = useSelector((state) => state.global)
     const state = useSelector(state => state.signup)
 
-    const dispath = useDispatch();
+    const dispatch = useDispatch();
     const navigate = useNavigate();
 
     const [capOk, setCapOk] = useState(false);
@@ -111,14 +111,14 @@ const SignUpPage = () => {
             })
             .then((res) => res.data)
             .then((data) => {
-                dispath(setUser(data?.team || data?.admin));
-                dispath(setToken(data?.token));
-                dispath(setIsAdmin(data?.isAdmin));
-                dispath(setError(null))
+                dispatch(setUser(data?.team || data?.admin));
+                dispatch(setToken(data?.token));
+                dispatch(setIsAdmin(data?.isAdmin));
+                dispatch(setError(null))
                 navigate('/auth');
             })
             .catch((err) => {
-                dispath(setError(err.response.data.message))
+                dispatch(setError(err.response.data.message))
                 console.log(err)
             })
 
@@ -126,15 +126,15 @@ const SignUpPage = () => {
 
     const setStepHandle = () => {
         if (currentStep === 1) {
-            dispath(setCurrentStep(2));
+            dispatch(setCurrentStep(2));
         } else {
             fetchFormData();
-            dispath(setCurrentStep(1));
+            dispatch(setCurrentStep(1));
         }
     }
 
     const backHandle = () => {
-        dispath(setCurrentStep(1))
+        dispatch(setCurrentStep(1))
     }
 
     return (
@@ -166,7 +166,7 @@ const SignUpPage = () => {
 const SignCap = () => {
     const { captain } = useSelector((state) => state.signup)
 
-    const dispath = useDispatch();
+    const dispatch = useDispatch();
 
     const inputRef = useMask({
         mask: '+7 (___) ___-__-__',
@@ -181,72 +181,72 @@ const SignCap = () => {
     });
 
     const teamnameHandle = (e) => {
-        dispath(setCaptainField({ field: 'teamname', value: e.target.value.trimLeft().replace(/[^a-zA-Zа-яА-Я_ ]/g, "") }))
+        dispatch(setCaptainField({ field: 'teamname', value: e.target.value.trimLeft().replace(/[^a-zA-Zа-яА-Я_ ]/g, "") }))
 
         if (e.target.value.trim().length < 3) {
-            dispath(setCaptainError({ field: 'teamname', error: true }))
+            dispatch(setCaptainError({ field: 'teamname', error: true }))
         } else {
-            dispath(setCaptainError({ field: 'teamname', error: false }))
+            dispatch(setCaptainError({ field: 'teamname', error: false }))
         }
     }
 
     const fullnameHandle = (e) => {
-        dispath(setCaptainField({ field: 'fullname', value: e.target.value.trimLeft().replace(/[^a-zA-Zа-яА-Я ]/g, "") }))
+        dispatch(setCaptainField({ field: 'fullname', value: e.target.value.trimLeft().replace(/[^a-zA-Zа-яА-Я ]/g, "") }))
 
         if (e.target.value.trim().split(' ').length < 2) {
-            dispath(setCaptainError({ field: 'fullname', error: true }))
+            dispatch(setCaptainError({ field: 'fullname', error: true }))
         } else {
-            dispath(setCaptainError({ field: 'fullname', error: false }))
+            dispatch(setCaptainError({ field: 'fullname', error: false }))
         }
     }
 
     const emailHandle = (e) => {
-        dispath(setCaptainField({ field: 'email', value: e.target.value.replace(/[^a-zA-Z0-9_@.]/g, "") }))
+        dispatch(setCaptainField({ field: 'email', value: e.target.value.replace(/[^a-zA-Z0-9_@.]/g, "") }))
 
         if (!/^[^@]+@[^@]+\.[^@]+$/.test(e.target.value)) {
-            dispath(setCaptainError({ field: 'email', error: true }))
+            dispatch(setCaptainError({ field: 'email', error: true }))
         } else {
-            dispath(setCaptainError({ field: 'email', error: false }))
+            dispatch(setCaptainError({ field: 'email', error: false }))
         }
     }
 
     const phoneHandle = (e) => {
-        dispath(setCaptainField({ field: 'phone', value: e.target.value }))
+        dispatch(setCaptainField({ field: 'phone', value: e.target.value }))
 
         if (e.target.value.length < 18) {
-            dispath(setCaptainError({ field: 'phone', error: true }))
+            dispatch(setCaptainError({ field: 'phone', error: true }))
         } else {
-            dispath(setCaptainError({ field: 'phone', error: false }))
+            dispatch(setCaptainError({ field: 'phone', error: false }))
         }
     }
 
     const usernameHandle = (e) => {
-        dispath(setCaptainField({ field: 'username', value: e.target.value.replace(/[^a-zA-Z0-9_@]/g, "") }))
+        dispatch(setCaptainField({ field: 'username', value: e.target.value.replace(/[^a-zA-Z0-9_@]/g, "") }))
 
         if (e.target.value.length < 2) {
-            dispath(setCaptainError({ field: 'username', error: true }))
+            dispatch(setCaptainError({ field: 'username', error: true }))
         } else {
-            dispath(setCaptainError({ field: 'username', error: false }))
+            dispatch(setCaptainError({ field: 'username', error: false }))
         }
     }
 
     const passwordHandle = (e) => {
-        dispath(setCaptainField({ field: 'password', value: e.target.value.replace(/[^a-zA-Z0-9_!?@#]/g, "").trim() }))
+        dispatch(setCaptainField({ field: 'password', value: e.target.value.replace(/[^a-zA-Z0-9_!?@#]/g, "").trim() }))
 
         if (e.target.value.length < 5) {
-            dispath(setCaptainError({ field: 'password', error: true }))
+            dispatch(setCaptainError({ field: 'password', error: true }))
         } else {
-            dispath(setCaptainError({ field: 'password', error: false }))
+            dispatch(setCaptainError({ field: 'password', error: false }))
         }
     }
 
     const passwordRepHandle = (e) => {
-        dispath(setCaptainField({ field: 'passwordRep', value: e.target.value.replace(/[^a-zA-Z0-9_!?@#]/g, "").trim() }))
+        dispatch(setCaptainField({ field: 'passwordRep', value: e.target.value.replace(/[^a-zA-Z0-9_!?@#]/g, "").trim() }))
 
         if (captain.password.value !== e.target.value) {
-            dispath(setCaptainError({ field: 'passwordRep', error: true }))
+            dispatch(setCaptainError({ field: 'passwordRep', error: true }))
         } else {
-            dispath(setCaptainError({ field: 'passwordRep', error: false }))
+            dispatch(setCaptainError({ field: 'passwordRep', error: false }))
         }
     }
 
@@ -265,16 +265,16 @@ const SignCap = () => {
 
 const SignMembers = () => {
     const { members, currentMember, confOk, persOk } = useSelector((state) => state.signup)
-    const dispath = useDispatch();
+    const dispatch = useDispatch();
 
     const clickHandle = (memberId) => {
         if (currentMember !== memberId) {
-            dispath(setCurrentMember(memberId))
+            dispatch(setCurrentMember(memberId))
         }
     }
 
     const checkHandle = (e, field) => {
-        dispath(setCheck({ field, value: e.target.checked }))
+        dispatch(setCheck({ field, value: e.target.checked }))
     }
 
     return (
@@ -296,7 +296,7 @@ const SignMembers = () => {
 }
 
 const MemberFields = ({ member }) => {
-    const dispath = useDispatch();
+    const dispatch = useDispatch();
 
     const inputRef = useMask({
         mask: '+7 (___) ___-__-__',
@@ -312,32 +312,32 @@ const MemberFields = ({ member }) => {
 
 
     const emailHandle = (e) => {
-        dispath(setMemberField({ id: member.id, field: 'email', value: e.target.value.replace(/[^a-zA-Z0-9_@.]/g, "") }))
+        dispatch(setMemberField({ id: member.id, field: 'email', value: e.target.value.replace(/[^a-zA-Z0-9_@.]/g, "") }))
 
         if (!/^[^@]+@[^@]+\.[^@]+$/.test(e.target.value)) {
-            dispath(setMemberError({ id: member.id, field: 'email', error: true }))
+            dispatch(setMemberError({ id: member.id, field: 'email', error: true }))
         } else {
-            dispath(setMemberError({ id: member.id, field: 'email', error: false }))
+            dispatch(setMemberError({ id: member.id, field: 'email', error: false }))
         }
     }
 
     const phoneHandle = (e) => {
-        dispath(setMemberField({ id: member.id, field: 'phone', value: e.target.value }))
+        dispatch(setMemberField({ id: member.id, field: 'phone', value: e.target.value }))
 
         if (e.target.value.length < 18) {
-            dispath(setMemberError({ id: member.id, field: 'phone', error: true }))
+            dispatch(setMemberError({ id: member.id, field: 'phone', error: true }))
         } else {
-            dispath(setMemberError({ id: member.id, field: 'phone', error: false }))
+            dispatch(setMemberError({ id: member.id, field: 'phone', error: false }))
         }
     }
 
     const usernameHandle = (e) => {
-        dispath(setMemberField({ id: member.id, field: 'username', value: e.target.value }))
+        dispatch(setMemberField({ id: member.id, field: 'username', value: e.target.value }))
 
         if (e.target.value.length < 2) {
-            dispath(setMemberError({ id: member.id, field: 'username', error: true }))
+            dispatch(setMemberError({ id: member.id, field: 'username', error: true }))
         } else {
-            dispath(setMemberError({ id: member.id, field: 'username', error: false }))
+            dispatch(setMemberError({ id: member.id, field: 'username', error: false }))
         }
     }
 

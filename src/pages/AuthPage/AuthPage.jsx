@@ -1,24 +1,28 @@
 import { useDispatch, useSelector } from "react-redux";
 import Input from "../../components/Input";
 import { setAuthField, setAuthError } from "./AuthSlice";
-import { setError, setToken, setUser, setIsAdmin, setSocket, setCoords } from "../../globalSlice";
+import { setError, setToken, setUser, setIsAdmin } from "../../globalSlice";
 import { useMask } from "@react-input/mask";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useEffect } from "react";
-import { useGeolocated } from "react-geolocated";
 
 const AuthPage = () => {
     const { password, phone } = useSelector((state) => state.auth);
-    const { error, token, socket, user, currentCoords } = useSelector((state) => state.global);
-    const state = useSelector(state => state.global);
+    const { error, token, isAdmin, user } = useSelector((state) => state.global);
 
-    const dispath = useDispatch();
+    const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    // if (token) {
-    //     navigate('/stages');
-    // }
+    // useEffect(() => {
+    //     if (token) {
+    //         if (isAdmin) {
+    //             navigate('/admin')
+    //         } else {
+    //             navigate('/stages');
+    //         }
+    //     }
+    // }, [token, user])
 
     const inputRef = useMask({
         mask: '+7 (___) ___-__-__',
@@ -35,13 +39,13 @@ const AuthPage = () => {
             })
             .then((res) => res.data)
             .then((data) => {
-                dispath(setUser(data?.team || data?.admin));
-                dispath(setToken(data?.token));
-                dispath(setIsAdmin(data?.isAdmin));
-                dispath(setError(null))
+                dispatch(setUser(data?.team || data?.admin));
+                dispatch(setToken(data?.token));
+                dispatch(setIsAdmin(data?.isAdmin));
+                dispatch(setError(null))
             })
             .catch((err) => {
-                dispath(setError(err.response.data.message))
+                dispatch(setError(err.response.data.message))
                 console.log(err)
             })
     }
@@ -51,22 +55,22 @@ const AuthPage = () => {
     }
 
     const setPhoneHandle = (e) => {
-        dispath(setAuthField({ field: 'phone', value: e.target.value }))
+        dispatch(setAuthField({ field: 'phone', value: e.target.value }))
 
         if (e.target.value.length < 18) {
-            dispath(setAuthError({ field: 'phone', error: true }))
+            dispatch(setAuthError({ field: 'phone', error: true }))
         } else {
-            dispath(setAuthError({ field: 'phone', error: false }))
+            dispatch(setAuthError({ field: 'phone', error: false }))
         }
     }
 
     const setPasswordHandle = (e) => {
-        dispath(setAuthField({ field: 'password', value: e.target.value.replace(/[^a-zA-Z0-9_!?@#]/g, "").trim() }))
+        dispatch(setAuthField({ field: 'password', value: e.target.value.replace(/[^a-zA-Z0-9_!?@#]/g, "").trim() }))
 
         if (e.target.value.length < 5) {
-            dispath(setAuthError({ field: 'password', error: true }))
+            dispatch(setAuthError({ field: 'password', error: true }))
         } else {
-            dispath(setAuthError({ field: 'password', error: false }))
+            dispatch(setAuthError({ field: 'password', error: false }))
         }
     }
 

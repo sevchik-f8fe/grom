@@ -61,7 +61,7 @@ createRoot(document.getElementById('root')).render(
           <ScrollToTop />
           <SetBG />
           <UseWebSocket />
-          <UseGeo />
+          {/* <UseGeo /> */}
           <Header />
 
           <Routes>

@@ -2,48 +2,57 @@ import { nanoid } from "nanoid";
 import { Map, Placemark, YMaps } from "@pbe/react-yandex-maps";
 
 import mark from "../../assets/img/geoMark.png"
+import markInactive from "../../assets/img/geoMarkInactive.png"
 import { useEffect } from "react";
-import { setTeams, updateTeam } from "./AdminSlice";
-import { useDispatch } from "react-redux";
+import { setCurrentTeam, setTeams, updateTeam } from "./AdminSlice";
+import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
+import { setError } from "../../globalSlice";
 
 const AdminPage = () => {
+    const { teams, currentTeam } = useSelector(state => state.admin)
     const dispatch = useDispatch();
 
     useEffect(() => {
-        // const socket = io('ws://localhost:8080');
+        //     if (!token || !isAdmin) {
+        //         navigate('/auth');
+        //         return;
+        //     } else {
         const newSocket = new WebSocket('ws://localhost:8080');
 
-        // newSocket.onopen = () => {
-        //     console.log('Connected to WebSocket server');
-        // };
-
         newSocket.onmessage = (team) => {
+            console.log('recieved msg to admin')
             dispatch(updateTeam({ teamName: team.teamName, currentCoords: team.currentCoords }))
         };
+        //    }
 
-        // newSocket.onclose = () => {
-        //     console.log('Disconnected from WebSocket server');
-        // };
-
-        // return () => {
-        //     newSocket.close();
-        // };
     }, [])
 
-    const dataList = [
-        {
-            coords: [59.871931, 30.265915],
-            onClickEvent: () => console.log('a'),
-        },
-        {
-            coords: [59.90311, 30.318409],
-            onClickEvent: () => console.log('a'),
-        },
-        {
-            coords: [59.90909, 30.257961],
-            onClickEvent: () => console.log('a'),
-        },
-    ];
+    useEffect(() => {
+        const fetchTeams = async () => {
+            await axios.post('http://127.0.0.1:3000/admin/getTeams',
+                {
+                    headers: {
+                        'Content-Type': 'application/json',
+                    }
+                })
+                .then((res) => res.data)
+                .then((data) => {
+                    dispatch(setTeams(data.teams));
+                    dispatch(setError(null))
+                })
+                .catch((err) => {
+                    dispatch(setError(err.response.data.message))
+                    console.log(err)
+                })
+        }
+        //     if (!token || !isAdmin) {
+        //         navigate('/auth');
+        //         return;
+        //     } else {
+        fetchTeams();
+        //}
+    }, [])
 
     const mapState = {
         center: [59.938886, 30.313838],
@@ -65,6 +74,12 @@ const AdminPage = () => {
         iconImageSize: [40, 40],
     };
 
+    const curretnPlacemarkOptions = {
+        iconLayout: 'default#image',
+        iconImageHref: markInactive,
+        iconImageSize: [40, 40],
+    };
+
     return (
         <div className="admin-container">
             <div className="map-container">
@@ -75,7 +90,14 @@ const AdminPage = () => {
                         defaultState={mapState}
                         options={mapOptions}
                     >
-                        {dataList.map((elem) => <Placemark key={nanoid()} options={placemarkOptions} onClick={elem.onClickEvent} geometry={elem.coords} />)}
+                        {teams?.map((elem) => <Placemark
+                            key={nanoid()}
+                            options={elem.teamName == currentTeam?.teamname ? curretnPlacemarkOptions : placemarkOptions}
+                            onClick={() => {
+                                dispatch(setCurrentTeam(elem?.onClickHandle()))
+                            }}
+                            geometry={elem?.currentCoords}
+                        />)}
                     </Map>
                 </YMaps>
             </div>
@@ -88,6 +110,31 @@ const AdminPage = () => {
                 <div className="admin-text-block">
                     <span className="admin-text">ВСЕГО КОМАНД:</span>
                     <span className="admin-text">10</span>
+                </div>
+
+                <div className="admin-team-container">
+                    {currentTeam ? (
+                        <div className="admin-team">
+                            <div className="admin-team-element">
+                                <span className="admin-team-text">Команда:</span>
+                                <span className="admin-team-text">{currentTeam.teamname}</span>
+                            </div>
+                            <div className="admin-team-element">
+                                <span className="admin-team-text">Капитан:</span>
+                                <span className="admin-team-text">{currentTeam.fullname}</span>
+                            </div>
+                            <div className="admin-team-element">
+                                <span className="admin-team-text">Телеграмм:</span>
+                                <span className="admin-team-text tg">{currentTeam.username}</span>
+                            </div>
+                            <div className="admin-team-element">
+                                <span className="admin-team-text">Текущая точка:</span>
+                                <span className="admin-team-text">№ {currentTeam.currentPoint}</span>
+                            </div>
+                        </div>
+                    ) : (
+                        <span className="admin-team-err">вы можете выбрать одну из команд на карте, чтобы узнать подробную информацию о ней</span>
+                    )}
                 </div>
             </div>
         </div>

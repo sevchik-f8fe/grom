@@ -11,14 +11,14 @@ const StagesPage = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    useEffect(() => {
-        if (!token || token.length < 5) {
-            // navigate('/auth');
-            return;
-        }
+    // useEffect(() => {
+    //     if (!token) {
+    //         navigate('/auth');
+    //         return;
+    //     }
 
-        // dispatch(setActiveStage(user.currentPoint))
-    }, [])
+    //     dispatch(setActiveStage(user.currentPoint))
+    // }, [])
 
     return (
         <div className="stages-container">
