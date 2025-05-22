@@ -24,7 +24,7 @@ import { globalReducer } from './globalSlice'
 //другое
 import Footer from './components/Footer'
 import Header from './components/Header'
-import ScrollToTop, { SetBG } from './hooks'
+import { SetBG, UseGeo, ScrollToTop, UseWebSocket } from './hooks'
 import './index.css'
 import { PersistGate } from 'redux-persist/integration/react'
 import { adminReducer } from './pages/AdminPage/AdminSlice'
@@ -60,6 +60,8 @@ createRoot(document.getElementById('root')).render(
         <PersistGate persistor={persistor} loading={null}>
           <ScrollToTop />
           <SetBG />
+          <UseWebSocket />
+          <UseGeo />
           <Header />
 
           <Routes>

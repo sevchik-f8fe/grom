@@ -5,6 +5,7 @@ const authSlice = createSlice({
     initialState: {
         phone: { value: '+7', error: false },
         password: { value: '', error: false },
+        coords: { value: [], error: false },
     },
     reducers: {
         setAuthField: (state, action) => {

@@ -1,24 +1,24 @@
 import { useDispatch, useSelector } from "react-redux";
 import Input from "../../components/Input";
 import { setAuthField, setAuthError } from "./AuthSlice";
-import { setError, setToken, setUser, setIsAdmin } from "../../globalSlice";
+import { setError, setToken, setUser, setIsAdmin, setSocket, setCoords } from "../../globalSlice";
 import { useMask } from "@react-input/mask";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useEffect } from "react";
+import { useGeolocated } from "react-geolocated";
 
 const AuthPage = () => {
     const { password, phone } = useSelector((state) => state.auth);
-    const { error, token } = useSelector((state) => state.global);
-    const state = useSelector(state => state.global)
+    const { error, token, socket, user, currentCoords } = useSelector((state) => state.global);
+    const state = useSelector(state => state.global);
+
     const dispath = useDispatch();
     const navigate = useNavigate();
 
-    useEffect(() => {
-        if (token) {
-            navigate('/stages');
-        }
-    }, [state])
+    // if (token) {
+    //     navigate('/stages');
+    // }
 
     const inputRef = useMask({
         mask: '+7 (___) ___-__-__',
@@ -39,7 +39,6 @@ const AuthPage = () => {
                 dispath(setToken(data?.token));
                 dispath(setIsAdmin(data?.isAdmin));
                 dispath(setError(null))
-                // navigate('/stages')
             })
             .catch((err) => {
                 dispath(setError(err.response.data.message))
