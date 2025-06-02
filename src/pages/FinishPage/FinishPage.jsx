@@ -1,6 +1,4 @@
-
 const StagePage = () => {
-
     return (
         <div className="stage-block-container-finish">
             <div className="stage-header-finish">
@@ -8,15 +6,12 @@ const StagePage = () => {
                 <div className="stage-subheader">
                     <span className="stage-title">МЕСТО</span>
                     <span className="stage-subtitle-finish">"Гомункулы"</span>
-                    <span className="stage-subtitle-finish-light">команда победителей</span>
+                    <span className="stage-subtitle-finish-light">Команда победителей</span>
                 </div>
             </div>
-
-
         </div>
     );
 }
-
 
 
 export default StagePage;

@@ -1,5 +1,5 @@
-<svg width="300" height="287" viewBox="0 0 300 287" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-<rect x="15.25" y="17.25" width="265.5" height="253.5" rx="9.75" fill="#D9D9D9" fill-opacity="0.2" stroke="white" stroke-width="0.5"/>
+<svg width="300" height="287" viewBox="12 14 272 259" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<rect x="15.25" y="17.25" width="265.5" height="253.5" rx="9.75" fill="#D9D9D9" fill-opacity="0.2" stroke="white" stroke-width="1.5"/>
 <mask id="mask0_131_2" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="217" width="69" height="69">
 <rect x="34.8262" y="217.991" width="47.9625" height="47.9625" transform="rotate(44.8657 34.8262 217.991)" fill="url(#pattern0_131_2)"/>
 </mask>

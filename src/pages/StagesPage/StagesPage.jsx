@@ -1,15 +1,15 @@
 import grayLine from "../../assets/img/lines/gray_line.svg"
 import colorLine from "../../assets/img/lines/color_line.svg"
-import { useDispatch, useSelector } from "react-redux";
+import { /*useDispatch,*/ useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
-import { setActiveStage } from "./StagesSlice";
+// import { useEffect } from "react";
+// import { setActiveStage } from "./StagesSlice";
 
 const StagesPage = () => {
     const { stages, activeStageId } = useSelector((state) => state.stages)
-    const { user, token, startAt } = useSelector(state => state.global)
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
+    // const { user, token, startAt } = useSelector(state => state.global)
+    // const dispatch = useDispatch();
+    // const navigate = useNavigate();
 
     // useEffect(() => {
     //     if (!token) {

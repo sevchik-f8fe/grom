@@ -24,10 +24,11 @@ export const ScrollToTop = () => {
 export const SetBG = () => {
     const { pathname } = useLocation();
 
+    // Добавлен отдельный задний фон для error-страницы и сканера QR-кодов
     useEffect(() => {
-        if (pathname === '/stages') {
+        if (pathname === '/stages' || pathname === '/error') {
             document.documentElement.style.setProperty('--bg-url', `url(${stage_bg})`);
-        } else if (/^\/stages\/([1-9]|10)$/.test(pathname) || pathname === '/finish') {
+        } else if (/^\/stages\/([1-9]|10)$/.test(pathname) || pathname === '/finish' || pathname === '/qr-scanner') {
             document.documentElement.style.setProperty('--bg-url', `url(${bg})`);
         } else {
             document.documentElement.style.setProperty('--bg-url', `url(${full_bg})`);
@@ -65,7 +66,7 @@ export const UseGeo = () => {
             watchPosition: true,
             userDecisionTimeout: 30000,
         });
-    const { error, user, token, socketState, socketSendHandle, isAdmin } = useSelector(state => state.global);
+    const { /*error,*/ user, token, socketState, socketSendHandle, isAdmin } = useSelector(state => state.global);
     const dispatch = useDispatch();
 
     useEffect(() => {

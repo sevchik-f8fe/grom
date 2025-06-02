@@ -12,9 +12,12 @@ const StagePage = () => {
 
     const clickHandle = () => {
         if (params.id != 10) {
-            dispatch(setActiveStage(Number(params.id) + 1));
+            // Теперь при нажатии на кнопку открывается сканер QR-кодов
+            navigate('/qr-scanner')
 
-            navigate('/stages')
+            // TODO: желательно это заменить на обработчик заданий или таймер
+            dispatch(setActiveStage(Number(params.id) + 1)); 
+
         }
     }
 
