@@ -6,25 +6,31 @@ import { setQrCode } from "./QRSlice";
 
 // Функция, вызывающая приложение
 const QRPage = () => {
-
   // Определение переменных, хранящих состояние
   const [scanResult, setScanResult] = useState("");
   const videoRef = useRef(null);
   const qrScannerRef = useRef(null);
   const dispatch = useDispatch();
+  const scanDelay = 1000;
 
   // TODO: добавить задержку сканирования или невозможность сканирования одних и тех же QR-кодов (или когда код сканируется в уже завершеный этап)
-  
+
   // Механизм сканирования
   useEffect(() => {
+    let lastScanTime = 0;
+
     const qrScanner = new QrScanner(
       videoRef.current,
       (result) => {
-        // Запись полученных данных
-        const qrData = result.data;
-        setScanResult(qrData);
-        console.log("QR code detected:", qrData);
-        dispatch(setQrCode(qrData));
+        const now = Date.now();
+        if (now - lastScanTime >= scanDelay) {
+          // Запись полученных данных
+          const qrData = result.data;
+          setScanResult(qrData);
+          console.log("QR code detected:", qrData);
+          dispatch(setQrCode(qrData));
+          lastScanTime = now;
+        }
       },
       {
         highlightCodeOutline: true,
