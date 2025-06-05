@@ -38,6 +38,7 @@
   background-position: 50% top;
 
   min-height: 100vh;
+  min-width: 320px;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -47,6 +48,7 @@
   --bg-url: url(/src/assets/img/bg/full_bg.png);
   background-image: var(--bg-url);
 }
+
 h1 {
   font-family: "vivl";
   font-size: 2em;
@@ -57,7 +59,7 @@ a {
 }
 
 .footer {
-  z-index: 100000000000;
+  z-index: 100;
   background-color: #151515;
   display: flex;
   justify-content: space-between;
@@ -65,12 +67,13 @@ a {
   padding: 1em;
   user-select: none;
   height: 50px;
+  /* max-width: 520px; */
 }
 
 @media (min-height: 660px) {
   .footer {
     position: absolute;
-    width: 100vw;
+    width: 100%;
     bottom: 0;
   }
 }

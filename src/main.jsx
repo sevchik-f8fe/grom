@@ -1,4 +1,4 @@
-import { StrictMode } from "react";
+import { StrictMode, useEffect, useState } from "react";
 import { createRoot } from "react-dom/client";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Provider } from "react-redux";
@@ -14,8 +14,6 @@ import SignUpPage from "./pages/SignUpPage/SignUpPage";
 import StagesPage from "./pages/StagesPage/StagesPage";
 import StagePage from "./pages/StagePage/StagePage";
 import AdminPage from "./pages/AdminPage/AdminPage";
-
-// Добавление моих страниц: сканер QR-кодов и страница ошибки
 import QRPage from "./pages/QRPage/QRPage";
 import ErrorPage from "./pages/ErrorPage";
 
@@ -24,8 +22,6 @@ import { authReducer } from "./pages/AuthPage/AuthSlice";
 import { stagesReducer } from "./pages/StagesPage/StagesSlice";
 import { signUpReducer } from "./pages/SignUpPage/SignUpSlice";
 import { globalReducer } from "./globalSlice";
-
-// Редусер сканера QR-кодов
 import { QRReducer } from "./pages/QRPage/QRSlice";
 
 //другое
@@ -51,8 +47,6 @@ const store = configureStore({
     signup: signUpReducer,
     stages: stagesReducer,
     admin: adminReducer,
-
-    // Редусер добавлен в Redux Store
     qr: QRReducer,
   },
   middleware: (getDefaultMiddleware) =>
@@ -63,6 +57,65 @@ const store = configureStore({
 
 export const persistor = persistStore(store);
 
+const ProjRoutes = () => {
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 520);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 520);
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
+  return (
+    <Routes>
+      <Route path="/admin" element={<AdminPage />} />
+      <Route path="/" element={<HomePage />} />
+      <Route
+        path="*"
+        element={
+          isMobile ? (
+            <>
+              <Routes>
+                {/*здесь создаем маршруты вроде все ок */}
+                <Route path="/auth" element={<AuthPage />} />
+                <Route path="/signup" element={<SignUpPage />} />
+                <Route path="/stages" element={<StagesPage />} />
+                <Route path="/stages/:id" element={<StagePage />} />
+                <Route path="/finish" element={<FinishPage />} />
+                <Route path="/qr-scanner" element={<QRPage />} />
+                <Route path="/error" element={<ErrorPage />} />
+                <Route path="*" element={<></>} />
+              </Routes>
+              <Footer />
+            </>
+          ) : (
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                height: "100vh",
+                fontSize: "24px",
+                fontWeight: "bold",
+                color: "red",
+                textAlign: "center",
+              }}
+            >
+              Страница открывается только на мобильных устройствах
+            </div>
+          )
+        }
+      />
+    </Routes>
+  );
+};
+
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <BrowserRouter>
@@ -71,28 +124,8 @@ createRoot(document.getElementById("root")).render(
           <ScrollToTop />
           <SetBG />
           <UseWebSocket />
-          {/* <UseGeo /> */}
           <Header />
-
-          <Routes>
-            {/*здесь создаем маршруты вроде все ок */}
-            <Route path="/" element={<HomePage />} />
-            <Route path="/auth" element={<AuthPage />} />
-            <Route path="/signup" element={<SignUpPage />} />
-            <Route path="/stages" element={<StagesPage />} />
-            <Route path="/stages/:id" element={<StagePage />} />
-            <Route path="/finish" element={<FinishPage />} />
-            <Route path="/admin" element={<AdminPage />} />
-            <Route path="/qr-scanner" element={<QRPage />} />
-
-            {/* TODO: задизайнить страницу с ошибкой */}
-            {/* TODO ОБЩИЙ: сначала разработать клиентскую базу, а потом экспериментировать с сервером */}
-            <Route path="/error" element={<ErrorPage />} />
-            
-            {/*тут будет страница с неправильным маршрутом то есть когда 404 то будет выходить она */}
-            <Route path="*" element={<></>}></Route>
-          </Routes>
-
+          <ProjRoutes />
           <Footer />
         </PersistGate>
       </Provider>
