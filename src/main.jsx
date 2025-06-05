@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components */
 import { StrictMode, useEffect, useState } from "react";
 import { createRoot } from "react-dom/client";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
@@ -87,12 +88,11 @@ const ProjRoutes = () => {
                 <Route path="/signup" element={<SignUpPage />} />
                 <Route path="/stages" element={<StagesPage />} />
                 <Route path="/stages/:id" element={<StagePage />} />
+                <Route path="/stages/:id/qr-scanner" element={<QRPage />} />
                 <Route path="/finish" element={<FinishPage />} />
-                <Route path="/qr-scanner" element={<QRPage />} />
                 <Route path="/error" element={<ErrorPage />} />
                 <Route path="*" element={<></>} />
               </Routes>
-              <Footer />
             </>
           ) : (
             <div
@@ -100,10 +100,10 @@ const ProjRoutes = () => {
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
-                height: "100vh",
+                height: "95vh",
                 fontSize: "24px",
                 fontWeight: "bold",
-                color: "red",
+                color: "white",
                 textAlign: "center",
               }}
             >

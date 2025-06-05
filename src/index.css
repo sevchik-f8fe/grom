@@ -465,6 +465,71 @@ a {
   border-radius: 15px;
 }
 
+/* Popup.module.css */
+
+.popup {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(21, 21, 21, 0.85); /* полупрозрачный темный фон, сочетается с основным bg */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+}
+
+.popupContent {
+  background-color: #1a1a1a; /* чуть более светлый темный фон для контраста */
+  border-radius: 16px;
+  padding: 2em;
+  max-width: 400px;
+  width: 90%;
+  box-shadow: 0 0 20px rgb(224 81 0 / 0.75); /* тепло-оранжевое свечение */
+  font-family: "bounded", sans-serif;
+  color: #fff;
+  text-align: center;
+  user-select: none;
+}
+
+.popupText {
+  margin-bottom: 1.5em;
+  font-size: 1.25em;
+  line-height: 1.4;
+}
+
+.popupLink {
+  display: block;
+  margin-bottom: 2em;
+  color: #e05100; /* фирменный оранжевый */
+  text-decoration: underline;
+  word-break: break-word;
+  font-weight: 700;
+  font-size: 1.1em;
+}
+
+.popupButton {
+  all: unset;
+  background-color: #e05100; /* фирменный оранжевый фон */
+  color: #fff;
+  font-family: "vivl", sans-serif;
+  font-weight: 700;
+  font-size: 1em;
+  padding: 0.6em 2em;
+  border-radius: 1.5em;
+  cursor: pointer;
+  user-select: none;
+  transition: background-color 0.2s ease;
+}
+
+.popupButton:hover,
+.popupButton:focus {
+  background-color: #b03b00;
+  outline: none;
+}
+
+.popupButton:active {
+  transform: scale(0.97);
+}
+
 /* Страница ошибки */
 
 /* Родительский контейнер страницы с ошибками */
