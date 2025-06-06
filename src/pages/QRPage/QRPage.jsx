@@ -1,116 +1,121 @@
 import { useState, useRef, useEffect } from "react";
 import QrScanner from "qr-scanner";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 import { setQrCode } from "./QRSlice";
 
 const QRPage = () => {
   const [scanResult, setScanResult] = useState("");
   const [showPopup, setShowPopup] = useState(false);
-  const [urlToOpen, setUrlToOpen] = useState("");
+  const [popupContent, setPopupContent] = useState({ message: "", link: null });
+  const [isProcessing, setIsProcessing] = useState(false);
+
   const videoRef = useRef(null);
   const qrScannerRef = useRef(null);
   const dispatch = useDispatch();
 
-  const scanDelay = 1000; // Задержка в 1 секунду
+  const { id: stageNumber } = useParams(); // Получаем номер этапа из URL
+  const { token } = useSelector((state) => state.global); // Получаем токен для авторизации
 
-  // Регулярное выражение для проверки, является ли строка ссылкой целиком (http(s):// или www.)
-  const isOnlyUrl = (text) => {
-    const urlRegex = /^(https?:\/\/|www\.)[^\s/$.?#].[^\s]*$/i;
-    return urlRegex.test(text.trim());
-  };
-
-  // Функция для превращения ссылок внутри текста в кликабельные <a>
-  const linkifyText = (text) => {
-    if (!text) return null;
-    // Регулярка поиска ссылок в тексте
-    const urlPattern = /(\bhttps?:\/\/[^\s]+|\bwww\.[^\s]+)/gi;
-
-    // Разбиваем по ссылкам и формируем JSX с кликабельными ссылками
-    const parts = text.split(urlPattern);
-
-    return parts.map((part, i) => {
-      if (urlPattern.test(part)) {
-        const href = part.startsWith("http") ? part : `https://${part}`;
-        return (
-          <a
-            key={i}
-            href={href}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="underline text-blue-600 hover:text-blue-800"
-          >
-            {part}
-          </a>
-        );
-      }
-      return part;
-    });
+  // Функция закрытия pop-up из вашего примера
+  const closePopup = () => {
+    setShowPopup(false);
+    setPopupContent({ message: "", link: null });
+    setIsProcessing(false);
+    qrScannerRef.current
+      ?.start()
+      .catch((err) => console.error("Не удалось перезапустить сканер:", err));
   };
 
   useEffect(() => {
-  let lastScanTime = 0;
-  const qrScanner = new QrScanner(
-    videoRef.current,
-    (result) => {
-      if (showPopup) return;
-
-      const now = Date.now();
-      if (now - lastScanTime >= scanDelay) {
-        const qrData = result.data.trim();
-
-        setScanResult(qrData);
-        dispatch(setQrCode(qrData));
-
-        if (isOnlyUrl(qrData)) {
-          setUrlToOpen(qrData.startsWith("http") ? qrData : `https://${qrData}`);
-          setShowPopup(true);
-          qrScanner.stop();
-        }
-
-        lastScanTime = now;
-      }
-    },
-    {
-      highlightCodeOutline: true,
-    }
-  );
-
-  qrScannerRef.current = qrScanner;
-
-  const handleVisibilityChange = () => {
-    if (document.visibilityState === "visible") {
-      if (!showPopup) {
-        qrScanner.start().catch((error) => {
-          console.error("Failed to start QR scanner", error);
+    const handleServerResponse = async (scannedData) => {
+      // Теперь эта функция отвечает только за общение с сервером
+      try {
+        const response = await fetch(`/api/verify-qr/${stageNumber}`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({ scannedData }),
         });
+
+        const data = await response.json();
+        setPopupContent({
+          message: data.message || "Произошла ошибка при обработке.",
+          link: data.success ? data.link : null,
+        });
+      } catch (error) {
+        console.error("Ошибка при отправке данных QR-кода:", error);
+        setPopupContent({
+          message: "Не удалось подключиться к серверу.",
+          link: null,
+        });
+      } finally {
+        // Показываем pop-up в любом случае
+        setShowPopup(true);
       }
-      // Если поп-ап открыт - не запускать
-    } else {
-      qrScanner.stop();
+    };
+
+    if (videoRef.current) {
+      const scanner = new QrScanner(
+        videoRef.current,
+        (result) => {
+          // ШАГ 2: Блокируем повторное сканирование
+          if (isProcessing || showPopup) {
+            return;
+          }
+
+          if (result && result.data) {
+            const qrData = result.data.trim();
+            if (qrData) {
+              setIsProcessing(true);
+              qrScannerRef.current?.stop();
+
+              setScanResult(qrData);
+              dispatch(setQrCode(qrData));
+              handleServerResponse(qrData);
+            }
+          }
+        },
+        {
+          highlightCodeOutline: true,
+          highlightScanRegion: true,
+        }
+      );
+
+      qrScannerRef.current = scanner;
+
+      const handleVisibilityChange = () => {
+        // Эта логика предотвращает работу сканера в фоне
+        if (
+          document.visibilityState === "visible" &&
+          !showPopup &&
+          !isProcessing
+        ) {
+          qrScannerRef.current?.start();
+        } else {
+          qrScannerRef.current?.stop();
+        }
+      };
+
+      document.addEventListener("visibilitychange", handleVisibilityChange);
+
+      if (!showPopup && !isProcessing) {
+        scanner
+          .start()
+          .catch((err) => console.error("Не удалось запустить QR сканер", err));
+      }
+
+      return () => {
+        document.removeEventListener(
+          "visibilitychange",
+          handleVisibilityChange
+        );
+        qrScannerRef.current?.destroy();
+      };
     }
-  };
-
-  document.addEventListener("visibilitychange", handleVisibilityChange);
-
-  // Стартуем сканер по умолчанию, если нет поп-апа
-  if (!showPopup) {
-    qrScanner.start().catch((error) => {
-      console.error("Failed to start QR scanner", error);
-    });
-  }
-
-  return () => {
-    document.removeEventListener("visibilitychange", handleVisibilityChange);
-    qrScanner.destroy();
-  };
-}, [dispatch, scanDelay, showPopup]);
-
-  // Обработчик закрытия поп-апа — возобновляет сканирование
-  const closePopup = () => {
-    setShowPopup(false);
-    setUrlToOpen("");
-    qrScannerRef.current?.start();
-  };
+  }, [dispatch, showPopup, stageNumber, token, isProcessing]);
 
   return (
     <div className="qr-page-container">
@@ -119,19 +124,20 @@ const QRPage = () => {
       </div>
 
       <div>
+        {/* ШАГ 3: Возвращаем оверлей с исправлением */}
         <img
           src="/src/assets/img/qr.svg"
           className="qr-cover"
           alt="QR code cover"
+          style={{ pointerEvents: "none" }}
         />
         <video ref={videoRef} className="qr-page-video" />
       </div>
 
       <p>
-        Данные: <br /> {linkifyText(scanResult)}
+        Данные: <br /> {scanResult || "..."}
       </p>
 
-      {/* Поп-ап при сканировании только ссылки */}
       {showPopup && (
         <div
           className="popup"
@@ -141,20 +147,22 @@ const QRPage = () => {
         >
           <div className="popupContent">
             <p id="popupTitle" className="popupText">
-              Перейти по ссылке?
+              {popupContent.message}
             </p>
-            <a
-              href={urlToOpen}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="popupLink"
-            >
-              {urlToOpen}
-            </a>
+            {popupContent.link && (
+              <a
+                href={popupContent.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="popupLink"
+              >
+                Перейти по ссылке
+              </a>
+            )}
             <button
               onClick={closePopup}
               className="popupButton"
-              aria-label="Закрыть окно перехода по ссылке"
+              aria-label="Закрыть окно"
             >
               Закрыть
             </button>

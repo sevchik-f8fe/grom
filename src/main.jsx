@@ -28,6 +28,7 @@ import { QRReducer } from "./pages/QRPage/QRSlice";
 //другое
 import Footer from "./components/Footer";
 import Header from "./components/Header";
+import QuestStateLoader from "./components/QuestStateLoader";
 import { SetBG, UseGeo, ScrollToTop, UseWebSocket } from "./hooks";
 import "./index.css";
 import { PersistGate } from "redux-persist/integration/react";
@@ -121,6 +122,7 @@ createRoot(document.getElementById("root")).render(
     <BrowserRouter>
       <Provider store={store}>
         <PersistGate persistor={persistor} loading={null}>
+          <QuestStateLoader />
           <ScrollToTop />
           <SetBG />
           <UseWebSocket />

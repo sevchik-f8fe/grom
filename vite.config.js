@@ -9,5 +9,11 @@ export default defineConfig({
     hmr: {
       overlay: false, // Показывать оверлей с ошибками HMR в браузере
     },
+    proxy: {
+      '/api': {
+        target: 'http://localhost:3000',
+        changeOrigin: true,
+      }
+    }
   },
 })

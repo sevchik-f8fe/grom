@@ -10,6 +10,7 @@ const globalSlice = createSlice({
         token: null,
         error: null,
         startAt: null,
+        currentStage: 1
     },
     reducers: {
         setUser: (state, action) => {
@@ -32,9 +33,12 @@ const globalSlice = createSlice({
             console.log(action.payload)
             state.startAt = action.payload;
         },
+        setCurrentStage: (state, action) => {
+            state.currentStage = action.payload;
+        }
     }
 });
 
-export const { setUser, setIsAdmin, setToken, setError, setSocket, setStartAt } = globalSlice.actions;
+export const { setUser, setIsAdmin, setToken, setError, setSocket, setStartAt, setCurrentStage } = globalSlice.actions;
 
 export const globalReducer = globalSlice.reducer;
